@@ -2,9 +2,10 @@ const axios = require('axios');
 const config = require('../config');
 const { predictHqClientTemporaryToken } = config;
 
-const predictHQConcerts = async location => {
+const predictHQConcerts = async coordinates => {
   try {
-    const latLong = '34.420830,-119.698189';
+    const { lat, lng } = coordinates;
+    const latLong = `${lat},${lng}`;
     const radius = 50;
     const config = {
       method: 'get',

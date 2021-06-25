@@ -6,7 +6,7 @@ const googleMapsDistance = async ({ pointA, pointB }) => {
   try {
     const config = {
       method: 'get',
-      url: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${pointA}&destinations=${pointB}&mode=driving&units=imperial&key=${googleMapsApiKey}`,
+      url: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=place_id:${pointA}&destinations=${pointB}&mode=driving&units=imperial&key=${googleMapsApiKey}`,
       headers: {},
     };
     return await axios(config).then(response => response.data.rows[0].elements[0].distance.text);

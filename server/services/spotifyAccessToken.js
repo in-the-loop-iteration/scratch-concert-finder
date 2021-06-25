@@ -9,8 +9,8 @@ const { spotifyClientId, spotifyClientSecret } = config;
 const spotifyAccessToken = async name => {
   try {
     // Lookup token information in db PENDING TABLE STEUP
-    const spotifyToken = 'BQC967-Dh0kTzJZ5_gVXgHez-grtpOsqACzsEGrFeWdFWiln2typt4abEtQkmA2EW3iRE_1sp6c1tpVptHw'; 
-    const spotifyTokenGeneratedAt = moment(); 
+    const spotifyToken = 'BQDwmo-Bti3LSKtb3UiPgFwpDEmXBku6q_S9AnD8j9st6GzTxlZaX2BNcxsZOI7ah5JxtAA7gGXlQlW-jZw';
+    const spotifyTokenGeneratedAt = moment();
     // If token hasn't expired (1 hour), return the token
     if (spotifyToken && moment() <= spotifyTokenGeneratedAt.add(1, 'hour')) return spotifyToken;
     // Generate a new Spotify access token
