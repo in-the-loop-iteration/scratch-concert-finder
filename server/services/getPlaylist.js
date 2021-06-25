@@ -2,6 +2,7 @@ const predictHQConcerts = require('./predictHQConcerts');
 const spotifyAccessToken = require('./spotifyAccessToken');
 const spotifyArtistSearch = require('./spotifyArtistSearch');
 const spotifyArtistTopTracks = require('./spotifyArtistTopTracks');
+const googleMapsDistance = require('./googleMapsDistance');
 
 const getPlaylist = async location => {
   try {
@@ -16,6 +17,7 @@ const getPlaylist = async location => {
       const topTracks = await spotifyArtistTopTracks({ artistId: artist.id, spotifyToken });
       const tracksToAddtoPlaylist = topTracks.length > 3 ? topTracks.slice(0, 3) : topTracks;
       const venue = entities[0];
+      const distance = await googleMapsDistance({ pointA: 'Los Angeles', pointB: venue.formatted_address });
       playlist.push(
         ...tracksToAddtoPlaylist.map(track => ({
           track: {
@@ -42,7 +44,7 @@ const getPlaylist = async location => {
           location,
           start,
           end,
-          distance: 1.4,
+          distance,
           spotifyToken,
           ticketPriceRange: [80, 210],
           ticketsLink: `https://www.google.com/search?q=${title}+tickets`,
