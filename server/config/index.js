@@ -7,7 +7,6 @@ const config = {
   port: process.env.PORT,
   spotifyClientId: process.env.SPOTIFY_CLIENT_ID,
   spotifyClientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-  spotifyTemporaryToken: process.env.SPOTIFY_TEMPORARY_TOKEN,
   ticketmasterConsumerKey: process.env.TICKETMASTER_CONSUMER_KEY,
   ticketmasterConsumerSecret: process.env.TICKETMASTER_CONSUMER_SECRET,
   predictHqClientId: process.env.PREDICT_HQ_CLIENT_ID,
