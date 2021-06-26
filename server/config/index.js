@@ -5,6 +5,7 @@ const config = {
   host: process.env.HOST,
   database: process.env.DATABASE,
   port: process.env.PORT,
+  googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
   spotifyClientId: process.env.SPOTIFY_CLIENT_ID,
   spotifyClientSecret: process.env.SPOTIFY_CLIENT_SECRET,
   ticketmasterConsumerKey: process.env.TICKETMASTER_CONSUMER_KEY,
