@@ -1,57 +1,63 @@
-const axios = require('axios');
-const config = require('../config');
-const { predictHqClientTemporaryToken } = config;
+const predictHQConcerts = require('./predictHQConcerts');
+const spotifyAccessToken = require('./spotifyAccessToken');
+const spotifyArtistSearch = require('./spotifyArtistSearch');
+const spotifyArtistTopTracks = require('./spotifyArtistTopTracks');
+const googleMapsDistance = require('./googleMapsDistance');
+const googleMapsPlaceLatLong = require('./googleMapsPlaceLatLong');
 
-const getPlaylist = async location => {
+const getPlaylist = async ({ place_id }) => {
   try {
-    const latLong = '34.420830,-119.698189';
-    const radius = 50;
-    const config = {
-      method: 'get',
-      url: `https://api.predicthq.com/v1/events?category=concerts&location_around.origin=${latLong}&location_around.scale=${radius}mi`,
-      headers: {
-        Authorization: `Bearer ${predictHqClientTemporaryToken}`,
-      },
-    };
-    const predictHQConcerts = await axios(config).then(response => response.data.results);
+    const coordinates = await googleMapsPlaceLatLong(place_id);
+    const concerts = await predictHQConcerts(coordinates);
     const playlist = [];
-    for (const concert of predictHQConcerts) {
-      const artistSongs = await getArtistSongs(concert.title);
-      const { entities, location, start, end } = concert;
+    const spotifyToken = await spotifyAccessToken();
+    for (const concert of concerts) {
+      const { entities, location, start, end, title } = concert;
       const venue = entities[0];
+      if (!venue) continue;
+      const titleScrubbed = title.replace(/[^\w\s]/gi, '');
+      const artistSearchResults = await spotifyArtistSearch({ title: titleScrubbed, spotifyToken });
+      if (artistSearchResults.length === 0) continue;
+      const artist = artistSearchResults[0];
+      const topTracks = await spotifyArtistTopTracks({ artistId: artist.id, spotifyToken });
+      const tracksToAddtoPlaylist = topTracks.length > 3 ? topTracks.slice(0, 3) : topTracks;
+      const distance = await googleMapsDistance({ pointA: place_id, pointB: venue.formatted_address });
       playlist.push(
-        ...artistSongs.map(song => ({
-          ...song,
-          location,
+        ...tracksToAddtoPlaylist.map(track => ({
+          track: {
+            id: track.id,
+            name: track.name,
+            uri: track.uri,
+            href: track.href,
+          },
+          album: {
+            id: track.album.id,
+            name: track.album.name,
+            uri: track.album.uri,
+            images: track.album.images,
+            href: track.album.href,
+          },
+          artist: {
+            id: track.artists[0].id,
+            name: track.artists[0].name,
+            href: track.artists[0].href,
+            uri: track.artists[0].uri,
+          },
           venue: venue.name,
           address: venue.formatted_address,
+          location,
           start,
           end,
-          distance: 1.4,
+          distance,
+          spotifyToken,
+          ticketPriceRange: [],
+          ticketsLink: `https://www.google.com/search?q=${title}+tickets`,
         }))
       );
     }
     return playlist;
   } catch (e) {
-    throw new Error(e.message);
-  }
-};
-
-const getArtistSongs = async artist => {
-  try {
-    let songs = [{
-        title: 'top hit'
-    }];
-    // lookup artist on spotify
-    // if result
-    // pull top three songs for the artist
-    // if no songs return empty array
-    // if songs, push to songs arr
-    // if no result
-    // separate name by commas and lookup each name follow the process above
-    return songs;
-  } catch (e) {
-    throw new Error(e.message);
+    throw new Error('getPlaylist error: ' + e.message);
   }
 };
 
