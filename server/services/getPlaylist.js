@@ -11,19 +11,22 @@ const getPlaylist = async ({ place_id }) => {
     const concerts = await predictHQConcerts(coordinates);
     const playlist = [];
     const spotifyToken = await spotifyAccessToken();
-    for (const concert of concerts) {
+    concerts.forEach(async (concert) => {
       const { entities, location, start, end, title } = concert;
       const venue = entities[0];
-      if (!venue) continue;
+      if (!venue) return;
       const titleScrubbed = title.replace(/[^\w\s]/gi, '');
       const artistSearchResults = await spotifyArtistSearch({ title: titleScrubbed, spotifyToken });
-      if (artistSearchResults.length === 0) continue;
+      if (artistSearchResults.length === 0) return;
       const artist = artistSearchResults[0];
       const topTracks = await spotifyArtistTopTracks({ artistId: artist.id, spotifyToken });
       const tracksToAddtoPlaylist = topTracks.length > 3 ? topTracks.slice(0, 3) : topTracks;
-      const distance = await googleMapsDistance({ pointA: place_id, pointB: venue.formatted_address });
+      const distance = await googleMapsDistance({
+        pointA: place_id,
+        pointB: venue.formatted_address,
+      });
       playlist.push(
-        ...tracksToAddtoPlaylist.map(track => ({
+        ...tracksToAddtoPlaylist.map((track) => ({
           track: {
             id: track.id,
             name: track.name,
@@ -54,10 +57,10 @@ const getPlaylist = async ({ place_id }) => {
           ticketsLink: `https://www.google.com/search?q=${title}+tickets`,
         }))
       );
-    }
+    });
     return playlist;
   } catch (e) {
-    throw new Error('getPlaylist error: ' + e.message);
+    throw new Error(`getPlaylist error: ${e.message}`);
   }
 };
 
