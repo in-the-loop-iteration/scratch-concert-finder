@@ -1,11 +1,15 @@
 import React from 'react';
+import { ChakraProvider } from '@chakra-ui/react';
+import Search from '/client/components/Search.jsx'
+
 
 const App = (props) => {
 
     return (
-        <div>
-            <h2>this is our wicked awesome app</h2>
-        </div>
+<ChakraProvider>
+    <Search />
+
+</ChakraProvider>
     );
 }
 
