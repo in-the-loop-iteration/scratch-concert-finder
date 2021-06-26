@@ -9,7 +9,7 @@ const FetchPlaylist = async place_id => {
       headers: {
         'Content-Type': 'application/json',
       },
-      data: data,
+      data,
     };
     return await axios(config).then(response => response.data);
   } catch (e) {

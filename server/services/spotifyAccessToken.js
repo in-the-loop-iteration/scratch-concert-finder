@@ -8,7 +8,7 @@ const { spotifyClientId, spotifyClientSecret } = config;
 
 const spotifyAccessToken = async name => {
   try {
-    // Lookup token information in db PENDING TABLE STEUP
+    // Lookup token information in db PENDING TABLE SETUP
     const spotifyToken = 'BQDwmo-Bti3LSKtb3UiPgFwpDEmXBku6q_S9AnD8j9st6GzTxlZaX2BNcxsZOI7ah5JxtAA7gGXlQlW-jZw';
     const spotifyTokenGeneratedAt = moment();
     // If token hasn't expired (1 hour), return the token
@@ -28,7 +28,7 @@ const spotifyAccessToken = async name => {
       data: data,
     };
     const newToken = await axios(config).then(response => response.data.access_token);
-    // Store token to the db PENDING TABLE STEUP
+    // Store token to the db PENDING TABLE SETUP
     return newToken;
   } catch (e) {
     throw new Error('spotifyAccessToken error: ' + e.message);
