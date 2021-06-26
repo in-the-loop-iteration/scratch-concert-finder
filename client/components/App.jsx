@@ -1,6 +1,6 @@
 import React from 'react';
 import { ChakraProvider } from '@chakra-ui/react';
-import Search from './Search.jsx';
+import Search from './Search';
 
 const App = () => (
   <ChakraProvider>
