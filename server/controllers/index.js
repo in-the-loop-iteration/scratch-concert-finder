@@ -1,5 +1,6 @@
 const { getPlaylist } = require('../services/getPlaylist');
 const { getLocationSearchResults } = require('../services/getLocationSearchResults');
+const { getUserDetails } = require('../services/getUserDetails');
 
 const sendPlaylist = async (req, res, next) => {
   try {
@@ -26,7 +27,21 @@ const sendPotentialLocations = async (req, res, next) => {
   }
 };
 
+const sendUserDetails = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const user = await getUserDetails(id);
+    res.status(200).json(user);
+    next();
+  } catch (e) {
+    console.log(e.message);
+    res.sendStatus(500);
+    next(e);
+  }
+};
+
 module.exports = {
   sendPlaylist,
   sendPotentialLocations,
+  sendUserDetails
 };
