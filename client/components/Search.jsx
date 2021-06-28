@@ -1,19 +1,33 @@
 import React, { useState } from 'react';
-import { Box, Image, Input, Center, useDisclosure, Drawer, DrawerOverlay, DrawerBody, DrawerHeader, DrawerContent } from '@chakra-ui/react';
+import {
+  Box,
+  Image,
+  Input,
+  Center,
+  useDisclosure,
+  Drawer,
+  DrawerOverlay,
+  DrawerBody,
+  DrawerHeader,
+  DrawerContent,
+} from '@chakra-ui/react';
 import { InfoOutlineIcon, CalendarIcon } from '@chakra-ui/icons';
 import SpotifyPlayer from 'react-spotify-web-playback';
+import FetchMapSearchResults from '../api/FetchMapSearchResults';
 
 const Search = () => {
-  const [search, setSearch] = useState('');
   const { onClose, isOpen, onOpen } = useDisclosure();
+  const [search, setSearch] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
   const [flag, setFlag] = useState(false);
   const [clicked, setClick] = useState(false);
-  const handleKeyDown = e => {
-    if (e.key === 'Enter') {
-      setSearch(e.target.value);
-      console.log({ search });
-    }
+
+  const handleSearchForLocation = async () => {
+    setSearchResults(await FetchMapSearchResults({ searchQuery: search }));
   };
+
+  console.log('searchResults', searchResults);
+
   const getHashParams = () => {
     const hashParams = {};
     let e;
@@ -24,10 +38,20 @@ const Search = () => {
     }
     return hashParams;
   };
+
   const params = getHashParams();
   const token = params.access_token;
+
   return (
-    <Box w="100%" h="100%" bgGradient={['linear(to-tr, teal.300,yellow.400)', 'linear(to-t, blue.200, teal.500)', 'linear(to-b, orange.100, purple.300)']}>
+    <Box
+      w="100%"
+      h="100%"
+      bgGradient={[
+        'linear(to-tr, teal.300,yellow.400)',
+        'linear(to-t, blue.200, teal.500)',
+        'linear(to-b, orange.100, purple.300)',
+      ]}
+    >
       <Center>
         <InfoOutlineIcon mt={10} ml="10%" mr={5} onClick={onOpen} cursor="pointer" />
         {!clicked && (
@@ -38,7 +62,7 @@ const Search = () => {
             mt={10}
             mr={5}
             cursor="pointer"
-            onClick={e => setClick(true)}
+            onClick={(e) => setClick(true)}
             _hover={{
               background: 'white',
               color: 'teal.500',
@@ -54,13 +78,8 @@ const Search = () => {
             bg="white"
             mr={5}
             placeholder="Search by City, State, or Zip Code"
-            onChange={e => setSearch(e.target.value)}
-            onKeyDown={e => {
-              if (e.key === 'Enter') {
-                setSearch(e.target.value);
-                setFlag(true);
-              }
-            }}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e) => (e.key === 'Enter' ? handleSearchForLocation() : null)}
           />
         )}
         <CalendarIcon onClick={onOpen} mr="10%" mt={10} cursor="pointer" />

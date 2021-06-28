@@ -13,5 +13,6 @@ module.exports = {
   },
   plugins: ['react'],
   rules: {
+    'object-curly-newline': 'never',
   },
 };

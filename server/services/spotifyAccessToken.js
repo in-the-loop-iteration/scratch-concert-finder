@@ -6,15 +6,18 @@ const config = require('../config');
 
 const { spotifyClientId, spotifyClientSecret } = config;
 
-const spotifyAccessToken = async name => {
+const spotifyAccessToken = async (name) => {
   try {
-    // Lookup token information in db PENDING TABLE STEUP
-    const spotifyToken = 'BQDwmo-Bti3LSKtb3UiPgFwpDEmXBku6q_S9AnD8j9st6GzTxlZaX2BNcxsZOI7ah5JxtAA7gGXlQlW-jZw';
+    // Lookup token information in db PENDING TABLE SETUP
+    const spotifyToken =
+      'BQDyPwanBbsczG8Iu-t2l61mmyH9KzlAJ5baYETYsxgOovXbGb7DgDvqfZGmSWUf8LVIkWRRMNskvs7HnaI';
     const spotifyTokenGeneratedAt = moment();
     // If token hasn't expired (1 hour), return the token
     if (spotifyToken && moment() <= spotifyTokenGeneratedAt.add(1, 'hour')) return spotifyToken;
     // Generate a new Spotify access token
-    const encodedIdAndSecret = Buffer.from(`${spotifyClientId}:${spotifyClientSecret}`).toString('base64');
+    const encodedIdAndSecret = Buffer.from(`${spotifyClientId}:${spotifyClientSecret}`).toString(
+      'base64'
+    );
     const data = qs.stringify({ grant_type: 'client_credentials' });
     const config = {
       method: 'post',
@@ -27,8 +30,8 @@ const spotifyAccessToken = async name => {
       },
       data: data,
     };
-    const newToken = await axios(config).then(response => response.data.access_token);
-    // Store token to the db PENDING TABLE STEUP
+    const newToken = await axios(config).then((response) => response.data.access_token);
+    // Store token to the db PENDING TABLE SETUP
     return newToken;
   } catch (e) {
     throw new Error('spotifyAccessToken error: ' + e.message);

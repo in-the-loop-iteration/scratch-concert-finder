@@ -2,7 +2,7 @@ const axios = require('axios');
 const config = require('../config');
 const { predictHqClientTemporaryToken } = config;
 
-const predictHQConcerts = async coordinates => {
+const predictHQConcerts = async (coordinates) => {
   try {
     const { lat, lng } = coordinates;
     const latLong = `${lat},${lng}`;
@@ -14,7 +14,7 @@ const predictHQConcerts = async coordinates => {
         Authorization: `Bearer ${predictHqClientTemporaryToken}`,
       },
     };
-    return await axios(config).then(response => response.data.results);
+    return await axios(config).then((response) => response.data.results);
   } catch (e) {
     throw new Error(e.message);
   }
