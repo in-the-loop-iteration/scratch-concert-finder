@@ -2,11 +2,11 @@ const axios = require('axios');
 const config = require('../config');
 const { googleMapsApiKey } = config;
 
-const googleMapsPlaceLatLong = async (place_id) => {
+const googleMapsPlaceLatLong = async (placeId) => {
   try {
     const config = {
       method: 'get',
-      url: `https://maps.googleapis.com/maps/api/place/details/json?place_id=${place_id}&key=${googleMapsApiKey}`,
+      url: `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&key=${googleMapsApiKey}`,
       headers: {},
     };
     return await axios(config).then((response) => response.data.result.geometry.location);

@@ -10,7 +10,7 @@ const spotifyAccessToken = async (name) => {
   try {
     // Lookup token information in db PENDING TABLE SETUP
     const spotifyToken =
-      'BQDwmo-Bti3LSKtb3UiPgFwpDEmXBku6q_S9AnD8j9st6GzTxlZaX2BNcxsZOI7ah5JxtAA7gGXlQlW-jZw';
+      'BQDyPwanBbsczG8Iu-t2l61mmyH9KzlAJ5baYETYsxgOovXbGb7DgDvqfZGmSWUf8LVIkWRRMNskvs7HnaI';
     const spotifyTokenGeneratedAt = moment();
     // If token hasn't expired (1 hour), return the token
     if (spotifyToken && moment() <= spotifyTokenGeneratedAt.add(1, 'hour')) return spotifyToken;
