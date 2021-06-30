@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useState } from 'react';
 import {
   Box,
   Image,
   Input,
   Center,
-  Copyright,
   useDisclosure,
   Drawer,
   DrawerOverlay,
@@ -14,16 +12,12 @@ import {
   DrawerContent,
   Text,
   Stack,
-  Footer,
-  Slide
 } from '@chakra-ui/react';
-import { InfoOutlineIcon, CalendarIcon, SmallCloseIcon } from '@chakra-ui/icons';
+import { InfoOutlineIcon, CalendarIcon } from '@chakra-ui/icons';
 import SpotifyPlayer from 'react-spotify-web-playback';
 import FetchMapSearchResults from '../api/FetchMapSearchResults';
 import FetchPlaylist from '../api/FetchPlaylist';
-import Profile from '/client/components/Profile.jsx'
-import Player from '/client/components/Player.jsx';
-
+import Profile from '/client/components/Profile.jsx';
 
 const Search = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -31,35 +25,34 @@ const Search = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [flag, setFlag] = useState(false);
   const [clicked, setClick] = useState(false);
-  const [playlist, setPlaylist] = useState([])
+  const [playlist, setPlaylist] = useState([]);
   const [place, setPlace] = useState(null);
   const [load, setLoad] = useState(false);
   const [renderArray, setRenderArray] = useState(null);
-  const [visible, setVisible] = useState(true)
+  const [visible, setVisible] = useState(true);
 
   const handleSearchForLocation = async () => {
-    const results = await FetchMapSearchResults({ searchQuery: search })
-    setSearchResults(results)
-    
+    const results = await FetchMapSearchResults({ searchQuery: search });
+    setSearchResults(results);
+
     console.log('searchResults in func', results[0].place_id);
-        }
+  };
 
   const handlePlaylist = async (result) => {
-      console.log(result)
-      const playlistData = await FetchPlaylist({placeId : result.place_id})
-      setPlaylist(playlistData)
-      console.log('this is the playlist ', playlistData)
-      setLoad(true)
-      setFlag(false)
-      
-  }
+    console.log(result);
+    const playlistData = await FetchPlaylist({ placeId: result.place_id });
+    setPlaylist(playlistData);
+    console.log('this is the playlist ', playlistData);
+    setLoad(true);
+    setFlag(false);
+  };
 
   const handlePlayer = () => {
-      setLoad(true)
-      setFlag(false)
-  }
+    setLoad(true);
+    setFlag(false);
+  };
 
-  console.log('searchResults', searchResults)
+  console.log('searchResults', searchResults);
 
   const getHashParams = () => {
     const hashParams = {};
@@ -74,7 +67,7 @@ const Search = () => {
 
   const params = getHashParams();
   const token = params.access_token;
-  console.log(params.access_token)
+  console.log(params.access_token);
 
   return (
     <Box
@@ -116,31 +109,29 @@ const Search = () => {
             placeholder="Search by City, State, or Zip Code"
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={(e) => {
-                if(e.key === 'Enter'){
-                    handleSearchForLocation()
-                    setVisible(false)
-                    setFlag(true)
-                    console.log('search results are ', searchResults)
-                }
-                }
-            }
+              if (e.key === 'Enter') {
+                handleSearchForLocation();
+                setVisible(false);
+                setFlag(true);
+                console.log('search results are ', searchResults);
+              }
+            }}
           />
         )}
         <CalendarIcon onClick={console.log('calendar')} mr="10%" mt={10} cursor="pointer" />
-        
+
         <Drawer placement="left" onClose={onClose} isOpen={isOpen} w={'25%'}>
           <DrawerOverlay />
           <DrawerContent>
             <DrawerHeader borderBottomWidth="1px">Your Profile</DrawerHeader>
             <DrawerBody>
-                <>
-            <Profile />
-            </>
+              <>
+                <Profile />
+              </>
             </DrawerBody>
           </DrawerContent>
         </Drawer>
-      </Center> 
-
+      </Center>
 
       {visible && (
         <Image
@@ -152,66 +143,64 @@ const Search = () => {
         />
       )}
 
-    {flag && (
-        <div className='display grid' style={{cursor: 'pointer'}}>
-            {searchResults.map((result, i) => 
-                <Center>
-            <p 
-            onClick={ ()=>
-                handlePlaylist(result)
-                
-            }
-            key={i}
-            id={result.place_id}
-            style={{'marginTop': '2em'}}>
+      {flag && (
+        <div className="display grid" style={{ cursor: 'pointer' }}>
+          {searchResults.map((result, i) => (
+            <Center key={result.place_id}>
+              <p
+                onClick={() => handlePlaylist(result)}
+                key={i}
+                id={result.place_id}
+                style={{ marginTop: '2em' }}
+              >
                 {result.description}
-                
-            </p>
+              </p>
             </Center>
-            )}
-            
+          ))}
         </div>
-    )}
- 
+      )}
+
       {load && (
-   <div className="display grid">
-            <Text bgGradient="linear(to-l, #7928CA,#FF0080)" bgClip="text" fontSize="6xl" fontWeight="extrabold">
+        <div className="display grid">
+          <Text
+            bgGradient="linear(to-l, #7928CA,#FF0080)"
+            bgClip="text"
+            fontSize="6xl"
+            fontWeight="extrabold"
+          >
             Artists playing in your area!
-            
             {/* {playlist[0].spotifyToken} */}
             {/* {playlist[0].track.uri} */}
-            </Text>
-            <div className='spotify' style={{'width': '33%'}}>
-          <SpotifyPlayer 
-          token={playlist[0].spotifyToken} 
-          uris={[ playlist[0].track.uri ]} 
-          styles={{bgColor:'#000000',
-           color:'#dbdbdb',
-           sliderHandleColor: '#dbdbdb',
-           sliderColor: 'yellowgreen',
-           sliderTrackColor: '#000000',
-           trackNameColor:'#dbdbdb',
-           'font-family': "'Helvetica Neue', sans-serif",
-           'margin-bottom': '20px'}} />
-           </div>
+          </Text>
+          <div className="spotify" style={{ width: '33%' }}>
+            <SpotifyPlayer
+              token={playlist[0].spotifyToken}
+              uris={[playlist[0].track.uri]}
+              styles={{
+                bgColor: '#000000',
+                color: '#dbdbdb',
+                sliderHandleColor: '#dbdbdb',
+                sliderColor: 'yellowgreen',
+                sliderTrackColor: '#000000',
+                trackNameColor: '#dbdbdb',
+                'font-family': "'Helvetica Neue', sans-serif",
+                'margin-bottom': '20px',
+              }}
+            />
+          </div>
           <Text>
-              {playlist[0].artist.name} is playing at {playlist[0].venue} soon! 
-              <a href="http://www.ticketmaster.com">Click here to buy tickets!</a>
+            {playlist[0].artist.name} is playing at {playlist[0].venue} soon!
+            <a href="http://www.ticketmaster.com">Click here to buy tickets!</a>
           </Text>
         </div>
-       )} 
-        <div className='footer'>
-      <Box bg={'white'} role="contentinfo" mx="auto" w={'100%'} h={8} >
-    <Stack>
-      
-         <div className='footer-text'>
-      Copyright 2021 Tassled Wobbegong
+      )}
+      <div className="footer">
+        <Box bg={'white'} role="contentinfo" mx="auto" w={'100%'} h={8}>
+          <Stack>
+            <div className="footer-text">Copyright 2021 Tassled Wobbegong</div>
+          </Stack>
+        </Box>
       </div>
-    
-      
-    </Stack>
-  </Box>
-  </div>
     </Box>
   );
 };
