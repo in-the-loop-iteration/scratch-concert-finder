@@ -19,7 +19,8 @@ const spotifyAccessToken = async (tokenId) => {
     const encodedIdAndSecret = Buffer.from(`${spotifyClientId}:${spotifyClientSecret}`).toString(
       'base64'
     );
-    const data = qs.stringify({ grant_type: 'client_credentials' });
+    var scope = 'user-read-private user-read-email user-read-playback-state streaming user-modify-playback-state';
+    const data = qs.stringify({ grant_type: 'client_credentials', scope: scope });
     const config = {
       method: 'post',
       url: 'https://accounts.spotify.com/api/token/',
