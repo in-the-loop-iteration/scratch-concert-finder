@@ -16,7 +16,9 @@ const spotifyAccessToken = async (tokenId) => {
     // If token hasn't expired (1 hour), return the token
     if (spotifyToken && moment() <= moment(spotifyTokenGeneratedAt).add(1, 'hour')) return spotifyToken;
     // Generate a new Spotify access token
-    const encodedIdAndSecret = Buffer.from(`${spotifyClientId}:${spotifyClientSecret}`).toString('base64');
+    const encodedIdAndSecret = Buffer.from(`${spotifyClientId}:${spotifyClientSecret}`).toString(
+      'base64'
+    );
     const data = qs.stringify({ grant_type: 'client_credentials' });
     const config = {
       method: 'post',

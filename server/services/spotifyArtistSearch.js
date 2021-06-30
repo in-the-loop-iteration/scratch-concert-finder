@@ -10,7 +10,7 @@ const spotifyArtistSearch = async ({ title, spotifyToken }) => {
         Authorization: `Bearer ${spotifyToken}`,
       },
     };
-    return await axios(config).then(response => response.data.artists.items);
+    return await axios(config).then((response) => response.data.artists.items);
   } catch (e) {
     throw new Error('spotifyArtistSearch error: ' + e.message);
   }

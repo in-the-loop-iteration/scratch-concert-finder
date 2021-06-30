@@ -10,7 +10,9 @@ const spotifyArtistTopTracks = async ({ artistId, spotifyToken }) => {
         Authorization: `Bearer ${spotifyToken}`,
       },
     };
-    return await axios(config).then(response => response.data.tracks.filter(t => t.is_playable));
+    return await axios(config).then((response) =>
+      response.data.tracks.filter((t) => t.is_playable)
+    );
   } catch (e) {
     throw new Error('spotifyArtistTopTracks error: ' + e.message);
   }

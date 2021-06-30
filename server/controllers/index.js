@@ -64,7 +64,8 @@ const sendPlaylist = async (req, res, next) => {
     next();
   } catch (e) {
     console.log(e.message);
-    res.sendStatus(500) && next(e);
+    res.sendStatus(500);
+    next(e);
   }
 };
 
@@ -76,7 +77,8 @@ const sendPotentialLocations = async (req, res, next) => {
     next();
   } catch (e) {
     console.log(e.message);
-    res.sendStatus(500) && next(e);
+    res.sendStatus(500);
+    next(e);
   }
 };
 
