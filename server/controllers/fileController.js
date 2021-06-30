@@ -1,0 +1,1 @@
+const bad = 'I AM TEH FILE CONTROLLER lul'
