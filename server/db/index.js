@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const config = require('../config');
-const { database } = config;
+const { database} = config;
 
 mongoose
   .connect(database, {
@@ -19,10 +19,16 @@ const userSchema = new Schema({
   password: { type: String, required: true },
 });
 
-// TO DO: ENCRYPTION LOGIC
+const tokenSchema = new Schema({
+    source: {type: String, required: true},
+    tokenId: {type: String, required: true, unique: true},
+    timestamp: {type: Date, required: true}
+  });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('users', userSchema);
+const Token = mongoose.model('tokens', tokenSchema);
 
 module.exports = {
   User,
+  Token,
 };
