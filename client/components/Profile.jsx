@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Avatar, Box, Flex, List, Text } from '@chakra-ui/react';
+import { Avatar, Box, Flex, List, Text, useDisclosure } from '@chakra-ui/react';
 import FavoriteSong from './FavoriteSong';
+import { SmallCloseIcon } from '@chakra-ui/icons'
 
-const initialFavoriateSongs = [
+const initialFavoriteSongs = [
   {
     track: {
       id: '32M5CgyOmMJA5vzTQirbGr',
@@ -42,21 +43,25 @@ const initialFavoriateSongs = [
 ];
 
 const Profile = () => {
-  const [favoriteSongs, setFavoriteSongs] = useState(initialFavoriateSongs);
+  const [favoriteSongs, setFavoriteSongs] = useState(initialFavoriteSongs);
+ 
   return (
     <Flex
       flexDirection="column"
-      paddingLeft={20}
-      paddingRight={20}
+      paddingLeft={10}
+      paddingRight={10}
       h="100%"
-      w="100%"
-      bgGradient={[
-        'linear(to-tr, teal.300,yellow.400)',
-        'linear(to-t, blue.200, teal.500)',
-        'linear(to-b, orange.100, purple.300)',
-      ]}
+      w="25%"
+    //   bgGradient={[
+    //     'linear(to-tr, teal.300,yellow.400)',
+    //     'linear(to-t, blue.200, teal.500)',
+    //     'linear(to-b, orange.100, purple.300)',
+    //   ]}
+      
     >
-      <Flex marginTop={10}>
+      <Flex 
+      marginTop={10}
+      >
         <Avatar src="https://bit.ly/sage-adebayo" />
         <Box ml="3">
           <Text fontWeight="bold">Segun Adebayo</Text>
@@ -65,7 +70,7 @@ const Profile = () => {
       </Flex>
       {favoriteSongs.length > 0 && (
         <Flex flexDirection="column" marginTop={10}>
-          <Text fontSize="lg" marginBottom={5}>
+          <Text fontSize="lg" marginBottom={5} style={{'white-space': 'nowrap'}}>
             Favorite Songs
           </Text>
           <List spacing={3}>
@@ -73,6 +78,7 @@ const Profile = () => {
               <FavoriteSong song={song} />
             ))}
           </List>
+          
         </Flex>
       )}
     </Flex>

@@ -10,20 +10,46 @@ import {
   DrawerBody,
   DrawerHeader,
   DrawerContent,
+  Text,
+  Stack,
 } from '@chakra-ui/react';
 import { InfoOutlineIcon, CalendarIcon } from '@chakra-ui/icons';
 import SpotifyPlayer from 'react-spotify-web-playback';
 import FetchMapSearchResults from '../api/FetchMapSearchResults';
+import FetchPlaylist from '../api/FetchPlaylist';
+import Profile from '/client/components/Profile.jsx';
 
 const Search = () => {
-  const { onClose, isOpen, onOpen } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [flag, setFlag] = useState(false);
   const [clicked, setClick] = useState(false);
+  const [playlist, setPlaylist] = useState([]);
+  const [place, setPlace] = useState(null);
+  const [load, setLoad] = useState(false);
+  const [renderArray, setRenderArray] = useState(null);
+  const [visible, setVisible] = useState(true);
 
   const handleSearchForLocation = async () => {
-    setSearchResults(await FetchMapSearchResults({ searchQuery: search }));
+    const results = await FetchMapSearchResults({ searchQuery: search });
+    setSearchResults(results);
+
+    console.log('searchResults in func', results[0].place_id);
+  };
+
+  const handlePlaylist = async (result) => {
+    console.log(result);
+    const playlistData = await FetchPlaylist({ placeId: result.place_id });
+    setPlaylist(playlistData);
+    console.log('this is the playlist ', playlistData);
+    setLoad(true);
+    setFlag(false);
+  };
+
+  const handlePlayer = () => {
+    setLoad(true);
+    setFlag(false);
   };
 
   console.log('searchResults', searchResults);
@@ -41,6 +67,7 @@ const Search = () => {
 
   const params = getHashParams();
   const token = params.access_token;
+  console.log(params.access_token);
 
   return (
     <Box
@@ -53,7 +80,8 @@ const Search = () => {
       ]}
     >
       <Center>
-        <InfoOutlineIcon mt={10} ml="10%" mr={5} onClick={onOpen} cursor="pointer" />
+        <InfoOutlineIcon onClick={onOpen} mt={10} ml="10%" mr={5} cursor="pointer" />
+
         {!clicked && (
           <Center
             // color='lightgray'
@@ -71,6 +99,7 @@ const Search = () => {
             Find upcoming concerts and events near you!
           </Center>
         )}
+
         {clicked && (
           <Input
             w="50%"
@@ -79,70 +108,99 @@ const Search = () => {
             mr={5}
             placeholder="Search by City, State, or Zip Code"
             onChange={(e) => setSearch(e.target.value)}
-            onKeyDown={(e) => (e.key === 'Enter' ? handleSearchForLocation() : null)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleSearchForLocation();
+                setVisible(false);
+                setFlag(true);
+                console.log('search results are ', searchResults);
+              }
+            }}
           />
         )}
-        <CalendarIcon onClick={onOpen} mr="10%" mt={10} cursor="pointer" />
-        <Drawer placement="right" onClose={onClose} isOpen={isOpen}>
-          <DrawerOverlay />
-          <DrawerContent>
-            <DrawerHeader borderBottomWidth="1px">Your Events</DrawerHeader>
-            <DrawerBody>
-              <p>This concert...</p>
-              <p>That concert...</p>
-              <p>Those concerts....</p>
-            </DrawerBody>
-          </DrawerContent>
-        </Drawer>
-        <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
+        <CalendarIcon onClick={console.log('calendar')} mr="10%" mt={10} cursor="pointer" />
+
+        <Drawer placement="left" onClose={onClose} isOpen={isOpen} w={'25%'}>
           <DrawerOverlay />
           <DrawerContent>
             <DrawerHeader borderBottomWidth="1px">Your Profile</DrawerHeader>
             <DrawerBody>
-              <p>Some elements</p>
-              <p>Some more elements......</p>
-              <p>Sign Out</p>
+              <>
+                <Profile />
+              </>
             </DrawerBody>
           </DrawerContent>
         </Drawer>
       </Center>
-      {/* <Center
-        mt={2}
-        // color={'lightgray'}
-        fontWeight={"semibold"}
-        fontSize={"18px"}
-        >
-        Find upcoming concerts and events near you!
-        </Center> */}
-      {!flag && (
+
+      {visible && (
         <Image
           src="client/images/Universal Recycling Symbol (U+2672).svg"
           ml="auto"
           mr="auto"
-          // mt={25}
-          // mb={25}
-          h={500}
+          h={750}
           _filter="blur(1.5rem)"
         />
       )}
+
       {flag && (
-        <SpotifyPlayer
-          token={token}
-          uris={[]}
-          styles={{
-            activeColor: '#fff',
-            bgColor: '#333',
-            color: '#fff',
-            loaderColor: '#fff',
-            sliderColor: '#1cb954',
-            trackArtistColor: '#ccc',
-            trackNameColor: '#fff',
-            width: '500px',
-            'margin-left': '25%',
-            'margin-right': '25%',
-          }}
-        />
+        <div className="display grid" style={{ cursor: 'pointer' }}>
+          {searchResults.map((result, i) => (
+            <Center key={result.place_id}>
+              <p
+                onClick={() => handlePlaylist(result)}
+                key={i}
+                id={result.place_id}
+                style={{ marginTop: '2em' }}
+              >
+                {result.description}
+              </p>
+            </Center>
+          ))}
+        </div>
       )}
+
+      {load && (
+        <div className="display grid">
+          <Text
+            bgGradient="linear(to-l, #7928CA,#FF0080)"
+            bgClip="text"
+            fontSize="6xl"
+            fontWeight="extrabold"
+          >
+            Artists playing in your area!
+            {/* {playlist[0].spotifyToken} */}
+            {/* {playlist[0].track.uri} */}
+          </Text>
+          <div className="spotify" style={{ width: '33%' }}>
+            <SpotifyPlayer
+              token={playlist[0].spotifyToken}
+              uris={[playlist[0].track.uri]}
+              styles={{
+                bgColor: '#000000',
+                color: '#dbdbdb',
+                sliderHandleColor: '#dbdbdb',
+                sliderColor: 'yellowgreen',
+                sliderTrackColor: '#000000',
+                trackNameColor: '#dbdbdb',
+                'font-family': "'Helvetica Neue', sans-serif",
+                'margin-bottom': '20px',
+              }}
+            />
+          </div>
+          <Text>
+            {playlist[0].artist.name} is playing at {playlist[0].venue} soon!
+            <a href="http://www.ticketmaster.com">Click here to buy tickets!</a>
+          </Text>
+        </div>
+      )}
+      <div className="footer">
+        <Box bg={'white'} role="contentinfo" mx="auto" w={'100%'} h={8}>
+          <Stack>
+            <div className="footer-text">Copyright 2021 Tassled Wobbegong</div>
+          </Stack>
+        </Box>
+      </div>
     </Box>
   );
 };
