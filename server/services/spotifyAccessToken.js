@@ -2,23 +2,25 @@ const moment = require('moment');
 const axios = require('axios');
 const qs = require('qs');
 
+const { Token } = require('../db/index');
 const config = require('../config');
 
-const { spotifyClientId, spotifyClientSecret } = config;
-
-const spotifyAccessToken = async (name) => {
+const spotifyAccessToken = async () => {
+  const { spotifyClientId, spotifyClientSecret } = config;
   try {
-    // Lookup token information in db PENDING TABLE SETUP
-    const spotifyToken =
-      'BQDyPwanBbsczG8Iu-t2l61mmyH9KzlAJ5baYETYsxgOovXbGb7DgDvqfZGmSWUf8LVIkWRRMNskvs7HnaI';
-    const spotifyTokenGeneratedAt = moment();
+    // Lookup token information in db
+    const spotifyToken = await Token.findOne({});
     // If token hasn't expired (1 hour), return the token
-    if (spotifyToken && moment() <= spotifyTokenGeneratedAt.add(1, 'hour')) return spotifyToken;
+    if (spotifyToken && moment() <= moment(spotifyToken.timestamp).add(1, 'hour')) {
+      return spotifyToken.tokenId;
+    }
     // Generate a new Spotify access token
     const encodedIdAndSecret = Buffer.from(`${spotifyClientId}:${spotifyClientSecret}`).toString(
       'base64'
     );
-    const data = qs.stringify({ grant_type: 'client_credentials' });
+    var scope =
+      'user-read-private user-read-email user-read-playback-state streaming user-modify-playback-state';
+    const data = qs.stringify({ grant_type: 'client_credentials', scope: scope });
     const config = {
       method: 'post',
       url: 'https://accounts.spotify.com/api/token/',
@@ -31,7 +33,12 @@ const spotifyAccessToken = async (name) => {
       data: data,
     };
     const newToken = await axios(config).then((response) => response.data.access_token);
-    // Store token to the db PENDING TABLE SETUP
+    // Save new access token to database
+    const source = 'Spotify';
+    tokenId = newToken;
+    const timestamp = moment();
+    const newTokenData = await new Token({ source, tokenId, timestamp });
+    newTokenData.save();
     return newToken;
   } catch (e) {
     throw new Error('spotifyAccessToken error: ' + e.message);
