@@ -4,9 +4,18 @@ const path = require('path');
 const config = require('./config');
 const routes = require('./routes');
 
+const session = require("express-session");
+const bodyParser = require("body-parser");
+
 const { port } = config;
 
 app.use(express.json());
+
+app.use(express.static("public"));
+app.use(session({ secret: "felineslovemusictoo" }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -24,6 +33,22 @@ app.get('/', (req, res) => res.status(200).sendFile(path.resolve(__dirname, '../
 app.use('/build', express.static(path.resolve(__dirname, '../build')));
 
 app.use('/api', routes);
+
+app.post('/login',
+  passport.authenticate('local', { successRedirect: '/',failureRedirect: '/login', failureFlash: true })
+);
+
+app.get('/auth/spotify', passport.authenticate('spotify'));
+
+app.get(
+  '/auth/spotify/callback',
+  passport.authenticate('spotify', {failureRedirect: '/login'}),
+  function (req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  }
+);
+
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
