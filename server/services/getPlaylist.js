@@ -36,6 +36,7 @@ const getPlaylist = async ({ placeId }) => {
               name: track.name,
               uri: track.uri,
               href: track.href,
+              external_urls: track.external_urls
             },
             album: {
               id: track.album.id,
@@ -43,12 +44,14 @@ const getPlaylist = async ({ placeId }) => {
               uri: track.album.uri,
               images: track.album.images,
               href: track.album.href,
+              external_urls: track.album.external_urls
             },
             artist: {
               id: track.artists[0].id,
               name: track.artists[0].name,
               href: track.artists[0].href,
               uri: track.artists[0].uri,
+              external_urls: track.artists[0].external_urls
             },
             venue: venue.name,
             address: venue.formatted_address,

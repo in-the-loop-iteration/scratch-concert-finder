@@ -1,16 +1,9 @@
 const { getPlaylist } = require('../services/getPlaylist');
 const { getLocationSearchResults } = require('../services/getLocationSearchResults');
-const { spotifyAccessToken } = require('../services/spotifyAccessToken');
+const { getUserDetails } = require('../services/getUserDetails');
+const spotifyAccessToken = require('../services/spotifyAccessToken');
+const spotifyAccessTokenOAuth = require('../services/spotifyAccessTokenOAuth');
 const { User } = require('../db/index');
-const moment = require('moment');
-
-// console.log(User.find({}, function(err, result) {
-//   if (err) {
-//     console.log(err);
-//   } else {
-//     console.log(result);
-//   }
-// }));
 
 const createUser = async (req, res, next) => {
   const { name, email, password } = req.query;
@@ -82,9 +75,37 @@ const sendPotentialLocations = async (req, res, next) => {
   }
 };
 
+const sendUserDetails = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const user = await getUserDetails(id);
+    res.status(200).json(user);
+    next();
+  } catch (e) {
+    console.log(e.message);
+    res.sendStatus(500);
+    next(e);
+  }
+};
+
+const sendSpotifyOAuthToken = async (req, res, next) => {
+  const { code } = req.body;
+  try {
+    const user = await spotifyAccessTokenOAuth(code);
+    res.status(200).json(user);
+    next();
+  } catch (e) {
+    console.log(e.message);
+    res.sendStatus(500);
+    next(e);
+  }
+};
+
 module.exports = {
   createUser,
   handleToken,
   sendPlaylist,
   sendPotentialLocations,
+  sendUserDetails,
+  sendSpotifyOAuthToken
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Image,
@@ -18,6 +18,8 @@ import SpotifyPlayer from 'react-spotify-web-playback';
 import FetchMapSearchResults from '../api/FetchMapSearchResults';
 import FetchPlaylist from '../api/FetchPlaylist';
 import Profile from '/client/components/Profile.jsx';
+import FetchSpotifyAccessToken from '../api/FetchSpotifyAccessToken';
+import extractQueryParams from '../utils/extractQueryParams.js';
 
 const Search = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -30,6 +32,19 @@ const Search = () => {
   const [load, setLoad] = useState(false);
   const [renderArray, setRenderArray] = useState(null);
   const [visible, setVisible] = useState(true);
+  const [spotifyToken, setSpotifyToken] = useState('');
+
+  useEffect(() => {
+    handleFetchSpotifyAccessToken();
+  }, []);
+
+  const handleFetchSpotifyAccessToken = async () => {
+    const code = extractQueryParams('code');
+    if (code) {
+      const token = await FetchSpotifyAccessToken(code);
+      setSpotifyToken(token);
+    }
+  };
 
   const handleSearchForLocation = async () => {
     const results = await FetchMapSearchResults({ searchQuery: search });
@@ -174,7 +189,7 @@ const Search = () => {
           </Text>
           <div className="spotify" style={{ width: '33%' }}>
             <SpotifyPlayer
-              token={playlist[0].spotifyToken}
+              token={spotifyToken}
               uris={[playlist[0].track.uri]}
               styles={{
                 bgColor: '#000000',
