@@ -6,13 +6,14 @@ const routes = require('./routes');
 
 const session = require("express-session");
 const bodyParser = require("body-parser");
+const passport = require('passport');
 
 const { port } = config;
 
 app.use(express.json());
 
 app.use(express.static("public"));
-app.use(session({ secret: "felineslovemusictoo" }));
+app.use(session({ secret: "felineslovemusictoo", saveUninitialized: false, resave: false }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(passport.session());
