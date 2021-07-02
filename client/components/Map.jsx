@@ -22,7 +22,7 @@ const Map = () => {
   return (
     <div
       id="map"
-      style={{ position: 'absolute', top: 0, bottom: 0, width: '100%', zIndex: -1 }}
+      style={{ position: 'absolute', top: 0, bottom: 0, height: '100%', width: '100%', zIndex: -1 }}
     ></div>
   );
 };
