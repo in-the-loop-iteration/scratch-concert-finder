@@ -9,14 +9,14 @@ mongoose
     dbName: 'inTheLoop',
   })
   .then(() => console.log('Connected to Mongo DB.'))
-  .catch(err => console.log(err));
+  .catch((err) => console.log(err));
 
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  name: {type: String, required: true},
-  email: {type: String, required: true, unique: true},
-  password: {type: String, required: true}
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
 });
 
 const tokenSchema = new Schema({

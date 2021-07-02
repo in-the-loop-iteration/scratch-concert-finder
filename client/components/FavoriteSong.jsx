@@ -1,8 +1,11 @@
 import React from 'react';
-import { Avatar, Flex, Link, ListItem, Text } from '@chakra-ui/react';
+import { Avatar, Icon, Flex, Link, ListItem, Text } from '@chakra-ui/react';
+import { GiTicket } from 'react-icons/gi';
+import { AiFillCloseCircle } from 'react-icons/ai';
 
 const FavoriteSong = ({ song }) => {
   const { track, album, artist } = song;
+
   return (
     <ListItem key={track.id}>
       <Flex>
@@ -18,6 +21,24 @@ const FavoriteSong = ({ song }) => {
               {artist.name}
             </Link>
           </Text>
+        </Flex>
+        <Flex flexDirection="column" paddingLeft={3}>
+          <Icon
+            margin="auto"
+            as={GiTicket}
+            w={8}
+            h={8}
+            onClick={() => window.open(song.ticketsLink)}
+          />
+        </Flex>
+        <Flex flexDirection="column" paddingLeft={3}>
+          <Icon
+            margin="auto"
+            as={AiFillCloseCircle}
+            w={8}
+            h={8}
+            onClick={() => console.log('we will add remove favorite songs functionality later')}
+          />
         </Flex>
       </Flex>
     </ListItem>
