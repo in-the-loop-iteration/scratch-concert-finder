@@ -23,7 +23,8 @@ import FetchMapSearchResults from '../api/FetchMapSearchResults';
 import FetchPlaylist from '../api/FetchPlaylist';
 import Profile from '/client/components/Profile.jsx'
 import Player from '/client/components/Player.jsx';
-
+import Map from './Map';
+import styles from './Map.css'
 
 const Search = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -36,11 +37,15 @@ const Search = () => {
   const [load, setLoad] = useState(false);
   const [renderArray, setRenderArray] = useState(null);
   const [visible, setVisible] = useState(true)
-
-  const handleSearchForLocation = async () => {
+  const [ places, setPlaces ] = useState([
+    
+  ])
+  const handleSearchForLocation = async (e) => {
+    e.preventDefault()
     const results = await FetchMapSearchResults({ searchQuery: search })
     setSearchResults(results)
-    
+   
+    setSearch('')
     console.log('searchResults in func', results[0].place_id);
         }
 
@@ -59,38 +64,93 @@ const Search = () => {
       setFlag(false)
   }
 
-  console.log('searchResults', searchResults)
+  const handleChange = (e) => {
+    setSearch(e.target.value)
+  } 
 
-  const getHashParams = () => {
-    const hashParams = {};
-    let e;
-    const r = /([^&;=]+)=?([^&;]*)/g;
-    const q = window.location.hash.substring(1);
-    while (e === r.exec(q)) {
-      hashParams[e[1]] = decodeURIComponent(e[2]);
-    }
-    return hashParams;
-  };
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    // setSearch(e.target.value)
+    const accessToken = 'pk.eyJ1IjoiaWtqdWRkIiwiYSI6ImNrcWppMTM2ZTA5ODQybm9ieTE5M2J0YTAifQ._eHutyLjit-nTSOpnD-Vmg';
+    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${search}.json?access_token=${accessToken}`;
 
-  const params = getHashParams();
-  const token = params.access_token;
-  console.log(params.access_token)
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        const oldPlaces = places;
+        const firstResult = data.features[0]
+        
+        oldPlaces.push({
+          name: search,
+          address: firstResult.properties.address
+        })
+        // console.log('our old places ', oldPlaces)
+        setPlaces(oldPlaces)
+        // console.log('our places', places)
+        setSearch('')
+      })
+  }
+  const PlacesPanel = () => {
+    return(<div className='places'>
+      Search for concerts and events near you!
+    </div>)
+  }
 
-  return (
-    <Box
-      w="100%"
-      h="100%"
-      bgGradient={[
-        'linear(to-tr, teal.300,yellow.400)',
-        'linear(to-t, blue.200, teal.500)',
-        'linear(to-b, orange.100, purple.300)',
-      ]}
+  const placeItems = places.map((place, index) => {
+    return <div
+    place={place}
+    className='place-item'
+    key={index}
+    onClick={() => setLoad(true)}
+    style={{'padding-left':'40px'}}
     >
-      <Center>
-        <InfoOutlineIcon onClick={onOpen} mt={10} ml="10%" mr={5} cursor="pointer" />
+    {place.name} {place.address}
+    </div>
+  })
+  return (
+    
+    <div className="App">
+    
+      <Map style={styles}/>
+      <div className='box overlay'>
+      {/* <div
+      className="header"      
+      > */}
+      <p>In The Loop ∞</p>
+           <div 
+           className="searchbar"
+           > 
+             <form onSubmit ={handleSubmit}>
+             <Input 
+             value={search} 
+             onChange={handleChange}
+             placeholder="Search by Zip Code" 
+             ml={9}
+             mt={7}
+             mr={3}
+             mb={8}
+             w={450}
+             bg={'white'}/>
+             </form>
+             <InfoOutlineIcon 
+           onClick={onOpen} 
+           cursor="pointer" 
+           className="display"/>
+
+           </div>
+           <div className="placesPanel">
+             <PlacesPanel />
+             {placeItems}
+           </div>
+           </div>
+           {/* </div> */}
+
+
+
+{/* 
 
         {!clicked && (
-          <Center
+          <Text
             // color='lightgray'
             fontWeight="semibold"
             fontSize="18px"
@@ -102,17 +162,21 @@ const Search = () => {
               background: 'white',
               color: 'teal.500',
             }}
+            className="display"
           >
+            <p> 
             Find upcoming concerts and events near you!
-          </Center>
-        )}
+            </p>
+          </Text>
+        )} */}
 
         {clicked && (
           <Input
+          className="display"
             w="50%"
-            mt={10}
+            t={0}
             bg="white"
-            mr={5}
+            l={0}
             placeholder="Search by City, State, or Zip Code"
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={(e) => {
@@ -126,9 +190,10 @@ const Search = () => {
             }
           />
         )}
-        <CalendarIcon onClick={console.log('calendar')} mr="10%" mt={10} cursor="pointer" />
+        {/* <CalendarIcon onClick={console.log('calendar')} mr="10%" mt={10} cursor="pointer" /> */}
         
-        <Drawer placement="left" onClose={onClose} isOpen={isOpen} w={'25%'}>
+        <Drawer placement="right" onClose={onClose} isOpen={isOpen} w={'25%'}
+        className="display">
           <DrawerOverlay />
           <DrawerContent>
             <DrawerHeader borderBottomWidth="1px">Your Profile</DrawerHeader>
@@ -139,7 +204,7 @@ const Search = () => {
             </DrawerBody>
           </DrawerContent>
         </Drawer>
-      </Center> 
+   
 
 
       {visible && (
@@ -184,20 +249,24 @@ const Search = () => {
             <div className='spotify' style={{'width': '33%'}}>
           <SpotifyPlayer 
           token={playlist[0].spotifyToken} 
-          uris={[ playlist[0].track.uri ]} 
-          styles={{bgColor:'#000000',
+          uris={[ playlist[0].track.uri ]}
+         
+          styles={{
+              activeColor:'#fff',
+              bgColor: '#333',
            color:'#dbdbdb',
            sliderHandleColor: '#dbdbdb',
            sliderColor: 'yellowgreen',
            sliderTrackColor: '#000000',
+           height:'300px',
            trackNameColor:'#dbdbdb',
            'font-family': "'Helvetica Neue', sans-serif",
            'margin-bottom': '20px'}} />
            </div>
           <Text>
               {playlist[0].artist.name} is playing at {playlist[0].venue} soon! 
-              <a href="http://www.ticketmaster.com">Click here to buy tickets!</a>
           </Text>
+              <a href="http://www.ticketmaster.com">Click here to buy tickets!</a>
         </div>
        )} 
         <div className='footer'>
@@ -212,7 +281,7 @@ const Search = () => {
     </Stack>
   </Box>
   </div>
-    </Box>
+    </div>
   );
 };
 
