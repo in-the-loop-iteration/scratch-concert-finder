@@ -24,17 +24,4 @@ const App = () => (
   </ChakraProvider>
 );
 
-<<<<<<< HEAD
-    return (
-
-<ChakraProvider>
-    <Search />
-
-</ChakraProvider>
-    );
-}
-
 export default App;
-=======
-export default App;
->>>>>>> 80a32bc66d6bb649a8ee70db2db0adeda75f53f7
