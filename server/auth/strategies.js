@@ -2,11 +2,11 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const SpotifyStrategy = require('passport-spotify').Strategy;
 const config = require('../config/index.js');
-
+const { User, MasterUser } = require('../db/index');
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
-    User.findOne({ username: username }, function (err, user) {
+    User.findOne({ email: username }, function (err, user) {
       if (err) { return done(err); }
       if (!user) {
         return done(null, false, { message: 'Incorrect username.' });
@@ -29,6 +29,8 @@ passport.deserializeUser(function (id, done) {
     });
 });
 
+console.log("We are here!");
+
 passport.use(
     new SpotifyStrategy(
       {
@@ -37,7 +39,7 @@ passport.use(
         callbackURL: `http://localhost:${config.port}/auth/spotify/callback`,
       },
       function (accessToken, refreshToken, expires_in, profile, done) {
-        User.findOrCreate({spotifyId: profile.id}, function (err, user) {
+        MasterUser.findOrCreate({spotifyId: profile.id}, function (err, user) {
           return done(err, user);
         });
       }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Avatar, Box, Button, Flex, List, Spinner, Text } from '@chakra-ui/react';
 import FavoriteSong from './FavoriteSong';
 import FetchUserDetails from '../api/FetchUserDetails';
+import OAuthButton from './OAuthButton';
 
 const Profile = () => {
   const [user, setUser] = useState({});
@@ -39,10 +40,11 @@ const Profile = () => {
         >
           Spotify Authorization
         </Button>
+        <OAuthButton />
       </Flex>
       {user.favoriteSongs.length > 0 && (
         <Flex flexDirection="column" marginTop={10}>
-          <Text fontSize="lg" marginBottom={5} style={{ 'white-space': 'nowrap' }}>
+          <Text fontSize="lg" marginBottom={5} style={{ 'whiteSpace': 'nowrap' }}>
             Favorite Songs
           </Text>
           <List spacing={3}>

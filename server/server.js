@@ -8,7 +8,26 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 const passport = require('passport');
 
+const SpotifyStrategy = require('passport-spotify').Strategy;
+const { User, MasterUser } = require('./db/index');
+
+
 const { port } = config;
+
+passport.use(
+  new SpotifyStrategy(
+    {
+      clientID: config.spotifyClientId,
+      clientSecret: config.spotifyClientSecret,
+      callbackURL: `http://localhost:${config.port}/auth/spotify/callback`,
+    },
+    function (accessToken, refreshToken, expires_in, profile, done) {
+      MasterUser.findOrCreate({spotifyId: profile.id}, function (err, user) {
+        return done(err, user);
+      });
+    }
+  )
+);
 
 app.use(express.json());
 
@@ -39,7 +58,9 @@ app.post('/login',
   passport.authenticate('local', { successRedirect: '/',failureRedirect: '/login', failureFlash: true })
 );
 
-app.get('/auth/spotify', passport.authenticate('spotify'));
+app.get('/auth/spotify', passport.authenticate('spotify', {
+  scope: ['streaming', 'user-read-email', 'user-read-private', 'user-read-playback-state' , 'user-modify-playback-state'],
+}));
 
 app.get(
   '/auth/spotify/callback',

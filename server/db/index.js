@@ -19,6 +19,11 @@ const userSchema = new Schema({
   password: { type: String, required: true },
 });
 
+const masterUserSchema = new Schema({
+  spotifyId: { type: String, required: false },
+  localUser: { type: userSchema, required: false },
+});
+
 const tokenSchema = new Schema({
     source: {type: String, required: true},
     tokenId: {type: String, required: true, unique: true},
@@ -26,9 +31,11 @@ const tokenSchema = new Schema({
   });
 
 const User = mongoose.model('users', userSchema);
+const MasterUser = mongoose.model('masterUsers', masterUserSchema);
 const Token = mongoose.model('tokens', tokenSchema);
 
 module.exports = {
   User,
+  MasterUser,
   Token,
 };

@@ -5,7 +5,7 @@ const LoginForm = props => {
     return (
         <form action="/login" method="post">
             <div>
-                <label>Username:</label>
+                <label>Email:</label>
                 <input type="text" name="username" />
             </div>
             <div>
