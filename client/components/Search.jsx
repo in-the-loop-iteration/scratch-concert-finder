@@ -29,7 +29,7 @@ import styles from './Map.css'
 const Search = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [search, setSearch] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState(null);
   const [flag, setFlag] = useState(false);
   const [clicked, setClick] = useState(false);
   const [playlist, setPlaylist] = useState([])
@@ -43,10 +43,12 @@ const Search = () => {
   const handleSearchForLocation = async (e) => {
     e.preventDefault()
     const results = await FetchMapSearchResults({ searchQuery: search })
-    setSearchResults(results)
-   
+    const finalResult = results[0].description
+    setSearchResults(await FetchMapSearchResults({ searchQuery: search }))
+    
     setSearch('')
-    console.log('searchResults in func', results[0].place_id);
+    console.log('search results are',  searchResults)
+    console.log('searchResults in func', results[0].description);
         }
 
   const handlePlaylist = async (result) => {
@@ -65,7 +67,9 @@ const Search = () => {
   }
 
   const handleChange = (e) => {
+    e.preventDefault()
     setSearch(e.target.value)
+    console.log(e.target.value)
   } 
 
   const handleSubmit = (e) => {
@@ -104,7 +108,7 @@ const Search = () => {
     onClick={() => setLoad(true)}
     style={{'padding-left':'40px'}}
     >
-    {place.name} {place.address}
+    {searchResults}
     </div>
   })
   return (
@@ -120,7 +124,7 @@ const Search = () => {
            <div 
            className="searchbar"
            > 
-             <form onSubmit ={handleSubmit}>
+             <form onSubmit ={handleSearchForLocation}>
              <Input 
              value={search} 
              onChange={handleChange}
