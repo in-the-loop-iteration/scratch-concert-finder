@@ -8,19 +8,26 @@ body {
 .overlay{
     z-index: 1;
     position: fixed;
-    width: 42%;
-    max-width: 42%;
-    height: 10%;
+    width: 47%;
+    max-width: 47%;
+    height: 20%;
     max-height: 20%;
     background-color: rgba(255, 255, 255, 0.7);
     top: 0;
     left: 0
 }
+
+.title{
+    margin-top: 10px;
+    margin-left: 40px;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.5;
+}
 .header{
     background-color: black;
     /* opacity: .5; */
     position:fixed;
-
     top: 0;
     left: 0
   }
@@ -35,7 +42,7 @@ code {
   top: 85px;
   left: 0px;
   /* padding-left:10px; */
-  padding-top:5px;
+  margin-top:10px;
   margin-bottom:5px;
   color: black;
   font-weight: 600;
@@ -45,31 +52,30 @@ code {
 }
 .places{
     padding-left: 40px;
+    font-size: 22PX;
+    font-weight: 400
 }
-.place-item{
+/* .place-item{
     padding-left: 40px;
-}
+} */
 p{
-  position:fixed;
-  top: 10px;
-  left: 40px;
-  /* background-color: rgba(255, 255, 255, 0.5); */
-  color:black;
-  font-weight: 600;
-  font-size: 24px;
-  line-height: 1.5;
-  z-index: 1
+    position: fixed;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: black;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.5;
+    z-index: 1;
 }
 .searchbar{
-  width: 25%;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: normal;
 }
 
-div.place-item {
+.place-item {
   background-color: rgba(255, 255, 255, 0.5);
   padding: 5px 10px 5px 10px;
   font-size: 24px;
@@ -78,7 +84,7 @@ div.place-item {
   width: 100%
 }
 
-div.place-item:hover{
+.place-item:hover{
   background-color: blue;
   color: white
 }

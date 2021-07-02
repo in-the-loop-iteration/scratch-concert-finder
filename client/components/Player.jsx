@@ -12,16 +12,17 @@ const Player = ({ spotifyToken, playlist }) => {
     trackNameColor: '#dbdbdb',
     fontFamily: "'Helvetica Neue', sans-serif",
     marginBottom: '20px',
+    fontSize: '18px'
   };
 
   return (
-    <div className="display grid">
-      <div className="spotify" style={{ width: '33%', marginTop: '20px' }}>
+    <div className="place-item">
+      <div className="spotify" style={{ width: '33%', marginTop: '20px', 'background-color':'none'}}>
         <SpotifyPlayer token={spotifyToken} uris={[playlist[0].track.uri]} styles={playerStyle} />
       </div>
-      <Text style={{ marginTop: '20px' }}>
-        {playlist[0].artist.name} is playing at {playlist[0].venue} soon!
-        <a href={playlist[0].ticketsLink}>Click here to buy tickets!</a>
+      <Text style={{ marginTop: '20px', 'font-size':'18px' }}>
+       <p>{playlist[0].artist.name} is playing at {playlist[0].venue} soon!</p> 
+       <p> <a href={playlist[0].ticketsLink}>Click here to buy tickets!</a> </p>
       </Text>
     </div>
   );

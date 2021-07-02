@@ -2,18 +2,19 @@ import React from 'react';
 import { Center } from '@chakra-ui/react';
 
 const SearchResults = ({ searchResults, handlePlaylist }) => (
-  <div className="display grid" style={{ cursor: 'pointer' }}>
+  <div className="placePanel" style={{ cursor: 'pointer' }}>
     {searchResults.map((result, i) => (
-      <Center key={result.place_id}>
-        <p
+      
+        <div
           onClick={() => handlePlaylist(result)}
           key={i}
           id={result.place_id}
-          style={{ marginTop: '2em' }}
+          // style={{ marginTop: '2em' }}
+          className="place-item"
         >
           {result.description}
-        </p>
-      </Center>
+        </div>
+      
     ))}
   </div>
 );
