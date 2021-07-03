@@ -42,6 +42,7 @@ const Search = () => {
   const handleSearchForLocation = async () => {
     const results = await FetchMapSearchResults({ searchQuery: search });
     setSearchResults(results);
+    console.log(results)
   };
 
   const handlePlaylist = async (result) => {

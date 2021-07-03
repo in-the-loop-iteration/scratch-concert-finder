@@ -83,7 +83,8 @@ p{
   font-size: 24px;
   color: black;
   cursor: pointer;
-  width: 100%
+  width: 100%;
+  max-width:47%;
 }
 
 .place-item:hover{
