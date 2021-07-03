@@ -18,6 +18,7 @@ import Map from './Map';
 import Player from './Player';
 import SearchResults from './SearchResults';
 import Footer from './Footer'
+import style from './Map.css'
 const Search = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [search, setSearch] = useState('');
