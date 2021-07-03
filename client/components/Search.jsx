@@ -19,7 +19,7 @@ import Map from './Map';
 import Player from './Player';
 import SearchResults from './SearchResults';
 import Footer from './Footer'
-
+import style from './Map.css'
 const Search = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [search, setSearch] = useState('');
@@ -40,6 +40,7 @@ const Search = () => {
   const handleSearchForLocation = async () => {
     const results = await FetchMapSearchResults({ searchQuery: search });
     setSearchResults(results);
+    console.log(results)
   };
 
   const handlePlaylist = async (result) => {
@@ -50,13 +51,25 @@ const Search = () => {
   return (
     <div>
       <Map />
-      <Center>
-        <InfoOutlineIcon onClick={onOpen} mt={10} ml="10%" mr={5} cursor="pointer" />
+      <div className='box overlay'>
+        <div className='title'>In The Loop ∞
+        <InfoOutlineIcon 
+        onClick={onOpen} 
+        mt={2} 
+        ml={5} 
+        mr={5}
+        mb={2} 
+        cursor="pointer" 
+        w={5} 
+        h={5}
+        />
+        </div>
+        <div className="searchbar">
         <Input
-          w="50%"
-          mt={10}
+          mt={2}
+          ml={10}
+          mr={7}
           bg="white"
-          mr={5}
           placeholder="Enter your Zip Code to hear artists playing near you"
           onChange={(e) => setSearch(e.target.value)}
           onKeyDown={(e) => {
@@ -65,9 +78,11 @@ const Search = () => {
             }
           }}
         />
-        <CalendarIcon onClick={console.log('calendar')} mr="10%" mt={10} cursor="pointer" />
+        </div>
+        </div>
+        {/* <CalendarIcon onClick={console.log('calendar')} mr="10%" mt={10} cursor="pointer" /> */}
 
-        <Drawer placement="left" onClose={onClose} isOpen={isOpen} w={'25%'}>
+        <Drawer placement="right" onClose={onClose} isOpen={isOpen} w={'25%'}>
           <DrawerOverlay />
           <DrawerContent>
             <DrawerHeader borderBottomWidth="1px">Your Profile</DrawerHeader>
@@ -76,11 +91,15 @@ const Search = () => {
             </DrawerBody>
           </DrawerContent>
         </Drawer>
-      </Center>
+        <div className="placesPanel">
+          <div className="places">Search for concerts and events near you!
+          </div>
+          
       {searchResults.length > 0 && playlist.length === 0 && (
-        <SearchResults searchResults={searchResults} handlePlaylist={handlePlaylist} />
+        <SearchResults searchResults={searchResults} handlePlaylist={handlePlaylist} className="place-item"/>
       )}
       {playlist.length > 0 && <Player spotifyToken={spotifyToken} playlist={playlist} />}
+      </div>
       <Footer />
     </div>
   );
