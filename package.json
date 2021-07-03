@@ -29,6 +29,7 @@
     "express": "^4.17.1",
     "framer-motion": "^4.1.17",
     "google-maps": "^4.3.3",
+    "mapbox-gl": "^2.3.1",
     "moment": "^2.29.1",
     "mongoose": "^5.13.0",
     "react": "^17.0.2",
