@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
   Input,
-  Center,
   useDisclosure,
   Drawer,
   DrawerOverlay,
@@ -9,7 +8,7 @@ import {
   DrawerHeader,
   DrawerContent,
 } from '@chakra-ui/react';
-import { InfoOutlineIcon, CalendarIcon } from '@chakra-ui/icons';
+import { InfoOutlineIcon } from '@chakra-ui/icons';
 import FetchMapSearchResults from '../api/FetchMapSearchResults';
 import FetchPlaylist from '../api/FetchPlaylist';
 import Profile from '/client/components/Profile.jsx';
@@ -19,13 +18,13 @@ import Map from './Map';
 import Player from './Player';
 import SearchResults from './SearchResults';
 import Footer from './Footer'
-import style from './Map.css'
 const Search = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [playlist, setPlaylist] = useState([]);
   const [spotifyToken, setSpotifyToken] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     handleFetchSpotifyAccessToken();
@@ -35,18 +34,20 @@ const Search = () => {
     const code = extractQueryParams('code');
     const token = await FetchSpotifyAccessToken(code);
     setSpotifyToken(token);
+    setLoading(false)
   };
 
   const handleSearchForLocation = async () => {
     const results = await FetchMapSearchResults({ searchQuery: search });
     setSearchResults(results);
-    console.log(results)
   };
 
   const handlePlaylist = async (result) => {
     const playlistData = await FetchPlaylist({ placeId: result.place_id });
     setPlaylist(playlistData);
   };
+
+  if (loading) return <p>Loading</p>
 
   return (
     <div>
@@ -80,7 +81,6 @@ const Search = () => {
         />
         </div>
         </div>
-        {/* <CalendarIcon onClick={console.log('calendar')} mr="10%" mt={10} cursor="pointer" /> */}
 
         <Drawer placement="right" onClose={onClose} isOpen={isOpen} w={'25%'}>
           <DrawerOverlay />
