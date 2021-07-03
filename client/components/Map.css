@@ -37,8 +37,8 @@ code {
 }
 .placesPanel{
   position:fixed;
-  width: 42%;
-  max-width:42%;
+  width: 47%;
+  max-width:47%;
   top: 85px;
   left: 0px;
   /* padding-left:10px; */
@@ -53,13 +53,15 @@ code {
 .places{
     padding-left: 40px;
     font-size: 22PX;
-    font-weight: 400
+    font-weight: 400;
+    margin-top:10px
+   
 }
 /* .place-item{
     padding-left: 40px;
 } */
 p{
-    position: fixed;
+    /* position: fixed; */
     background-color: rgba(255, 255, 255, 0.5);
     color: black;
     font-weight: 600;
@@ -77,7 +79,7 @@ p{
 
 .place-item {
   background-color: rgba(255, 255, 255, 0.5);
-  padding: 5px 10px 5px 10px;
+  padding: 10px 10px 10px 10px;
   font-size: 24px;
   color: black;
   cursor: pointer;
@@ -87,6 +89,17 @@ p{
 .place-item:hover{
   background-color: blue;
   color: white
+}
+
+.searchResults {  background-color: rgba(255, 255, 255, 0.5);
+    padding: 10px 10px 10px 10px;
+    font-size: 24px;
+    color: black;
+    cursor: pointer;
+    width: 100%}
+
+a:hover{
+    border-bottom: 1px solid white;
 }
 
 div#map{
