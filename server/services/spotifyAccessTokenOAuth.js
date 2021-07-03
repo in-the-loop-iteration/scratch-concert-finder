@@ -1,6 +1,9 @@
 const axios = require('axios');
 const qs = require('qs');
+const moment = require('moment');
+
 const config = require('../config');
+const { Token } = require('../db/index');
 
 const spotifyAccessTokenOAuth = async (code) => {
   const { spotifyClientId, spotifyClientSecret } = config;
@@ -22,8 +25,14 @@ const spotifyAccessTokenOAuth = async (code) => {
       },
       data: data,
     };
-    const res = await axios(config).then((response) => response.data);
-    return res;
+    const token = await axios(config).then((response) => response.data);
+    const dbPayload = {
+      source: 'Spotify OAuth',
+      tokenId: token.access_token,
+      timestamp: moment(),
+    };
+    await new Token(dbPayload).save();
+    return token;
   } catch (e) {
     throw new Error('spotifyAccessTokenOAuth error: ' + e.message);
   }

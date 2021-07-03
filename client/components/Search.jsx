@@ -33,10 +33,8 @@ const Search = () => {
 
   const handleFetchSpotifyAccessToken = async () => {
     const code = extractQueryParams('code');
-    if (code) {
-      const token = await FetchSpotifyAccessToken(code);
-      setSpotifyToken(token);
-    }
+    const token = await FetchSpotifyAccessToken(code);
+    setSpotifyToken(token);
   };
 
   const handleSearchForLocation = async () => {

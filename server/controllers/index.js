@@ -3,7 +3,7 @@ const { getLocationSearchResults } = require('../services/getLocationSearchResul
 const { getUserDetails } = require('../services/getUserDetails');
 const spotifyAccessToken = require('../services/spotifyAccessToken');
 const spotifyAccessTokenOAuth = require('../services/spotifyAccessTokenOAuth');
-const { User } = require('../db/index');
+const { Token, User } = require('../db/index');
 
 const createUser = async (req, res, next) => {
   const { name, email, password } = req.query;
@@ -21,7 +21,7 @@ const createUser = async (req, res, next) => {
 
 const handleToken = async (req, res, next) => {
   let { tokenId } = req.query;
-  if(!tokenId) return next('No token!');
+  if (!tokenId) return next('No token!');
   try {
     tokenId = await spotifyAccessToken(tokenId);
     res.status(200).json(tokenId);
@@ -32,12 +32,12 @@ const handleToken = async (req, res, next) => {
   }
 };
 
-// const verifyUser = async (req, res, next) => { 
+// const verifyUser = async (req, res, next) => {
 //   const { email, password } = req.query;
-//   if(!email || !password) return next('Missing email and/or password'); 
+//   if(!email || !password) return next('Missing email and/or password');
 //   try {
 //     const user = await User.findOne({ email });
-//     if(!user) return next('User not found'); 
+//     if(!user) return next('User not found');
 //     if(!(user.password === password)) return next('Passwords do not match');
 //     res.locals.id = user._doc._id;
 //     res.status(200).json(user);
@@ -91,8 +91,15 @@ const sendUserDetails = async (req, res, next) => {
 const sendSpotifyOAuthToken = async (req, res, next) => {
   const { code } = req.body;
   try {
-    const user = await spotifyAccessTokenOAuth(code);
-    res.status(200).json(user);
+    let token;
+    if (code) {
+      const newSpotifyToken = await spotifyAccessTokenOAuth(code);
+      token = newSpotifyToken.access_token;
+    } else {
+      const spotifyToken = await Token.find().limit(1).sort({ $natural: -1 });
+      token = spotifyToken.tokenId;
+    }
+    res.status(200).json(token);
     next();
   } catch (e) {
     console.log(e.message);
@@ -107,5 +114,5 @@ module.exports = {
   sendPlaylist,
   sendPotentialLocations,
   sendUserDetails,
-  sendSpotifyOAuthToken
+  sendSpotifyOAuthToken,
 };
