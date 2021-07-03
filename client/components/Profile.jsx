@@ -30,15 +30,17 @@ const Profile = () => {
         </Box>
       </Flex>
       <Flex marginTop={10}>
-        <Button
-          onClick={() =>
-            window.open(
-              `https://accounts.spotify.com/authorize?client_id=aa263d7fcc054c2c8d8c5be8dc115117&response_type=code&redirect_uri=http:%2F%2Flocalhost:8080%2Fcallback&scope=${scope}`
-            )
-          }
-        >
-          Spotify Authorization
-        </Button>
+        <Box ml="3">
+          <Button
+            onClick={() =>
+              window.open(
+                `https://accounts.spotify.com/authorize?client_id=aa263d7fcc054c2c8d8c5be8dc115117&response_type=code&redirect_uri=http:%2F%2Flocalhost:8080%2Fcallback&scope=${scope}`
+              )
+            }
+          >
+            Spotify Authorization
+          </Button>
+        </Box>
       </Flex>
       {user.favoriteSongs.length > 0 && (
         <Flex flexDirection="column" marginTop={10}>
