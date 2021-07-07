@@ -7,6 +7,7 @@ const Map = () => {
   const [zoom, setZoom] = useState('13');
   const [style, setStyle] = useState('mapbox://styles/mapbox/satellite-v9');
 
+  // move this to dotenv
   useEffect(() => {
     mapbox.accessToken =
       'pk.eyJ1IjoiaWtqdWRkIiwiYSI6ImNrcWppMTM2ZTA5ODQybm9ieTE5M2J0YTAifQ._eHutyLjit-nTSOpnD-Vmg';

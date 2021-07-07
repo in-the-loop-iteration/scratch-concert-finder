@@ -4,6 +4,7 @@ import {
   Stack,
 } from '@chakra-ui/react';
 
+// create our copyright
 const Footer = () => (
   <div className="footer">
     <Box bg={'white'} role="contentinfo" mx="auto" w={'100%'} h={8}>
