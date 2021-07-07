@@ -5,6 +5,8 @@ const spotifyAccessToken = require('../services/spotifyAccessToken');
 const spotifyAccessTokenOAuth = require('../services/spotifyAccessTokenOAuth');
 const { Token, User } = require('../db/index');
 
+// improve the directory hierarchy by splitting middlewares in different files
+
 const createUser = async (req, res, next) => {
   const { name, email, password } = req.query;
   try {
@@ -88,6 +90,7 @@ const sendUserDetails = async (req, res, next) => {
   }
 };
 
+// double check whether this functionality is already in place
 const sendSpotifyOAuthToken = async (req, res, next) => {
   const { code } = req.body;
   try {

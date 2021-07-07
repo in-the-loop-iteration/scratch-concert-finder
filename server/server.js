@@ -3,11 +3,13 @@ const app = express();
 const path = require('path');
 const config = require('./config');
 const routes = require('./routes');
+// const cors = require('cors')
 
 const { port } = config;
 
 app.use(express.json());
 
+//Replace the following block with a one-liner call with CORS
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
