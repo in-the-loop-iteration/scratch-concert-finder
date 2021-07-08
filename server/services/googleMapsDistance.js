@@ -9,7 +9,13 @@ const googleMapsDistance = async ({ pointA, pointB }) => {
       url: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=place_id:${pointA}&destinations=${pointB}&mode=driving&units=imperial&key=${googleMapsApiKey}`,
       headers: {},
     };
-    return await axios(config).then((response) => response.data.rows[0].elements[0].distance.text);
+    return await axios(config).then((response) => {
+      if (response.data.rows.length > 0) {
+        return response.data.rows[0].elements[0].distance.text;
+      } else {
+        return 'distance not found';
+      }
+    });
   } catch (e) {
     throw new Error(e.message);
   }

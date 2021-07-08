@@ -65,9 +65,11 @@ const sendPlaylist = async (req, res, next) => {
 const sendPotentialLocations = async (req, res, next) => {
   const { searchQuery } = req.body;
   try {
+    // console.log('locations searched');
     const searchResults = await getLocationSearchResults(searchQuery);
-    res.status(200).json(searchResults);
-    next();
+    // console.log(searchResults);
+    return res.status(200).json(searchResults);
+    // next();
   } catch (e) {
     console.log(e.message);
     res.sendStatus(500);

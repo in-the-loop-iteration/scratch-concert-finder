@@ -8,7 +8,7 @@ import {
   DrawerHeader,
   DrawerContent,
 } from '@chakra-ui/react';
-import { InfoOutlineIcon } from '@chakra-ui/icons';
+import { InfoOutlineIcon, TriangleUpIcon } from '@chakra-ui/icons';
 import FetchMapSearchResults from '../api/FetchMapSearchResults';
 import FetchPlaylist from '../api/FetchPlaylist';
 import Profile from '/client/components/Profile.jsx';
@@ -25,7 +25,7 @@ const Search = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [playlist, setPlaylist] = useState([]);
   const [spotifyToken, setSpotifyToken] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     handleFetchSpotifyAccessToken();
