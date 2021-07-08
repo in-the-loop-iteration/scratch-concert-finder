@@ -1,35 +1,37 @@
 const { getPlaylist } = require('../services/getPlaylist');
-const { getLocationSearchResults } = require('../services/getLocationSearchResults');
+const {
+	getLocationSearchResults,
+} = require('../services/getLocationSearchResults');
 const { getUserDetails } = require('../services/getUserDetails');
 const spotifyAccessToken = require('../services/spotifyAccessToken');
 const spotifyAccessTokenOAuth = require('../services/spotifyAccessTokenOAuth');
 const { Token, User } = require('../db/index');
 
 const createUser = async (req, res, next) => {
-  const { name, email, password } = req.query;
-  try {
-    const newUser = await new User({ name, email, password });
-    newUser.save();
-    res.locals.id = newUser._doc._id;
-    res.status(200).json(newUser);
-    next();
-  } catch (e) {
-    console.log('createUser error: ', e.message);
-    res.sendStatus(500) && next(e);
-  }
+	const { name, email, password } = req.query;
+	try {
+		const newUser = await new User({ name, email, password });
+		newUser.save();
+		res.locals.id = newUser._doc._id;
+		return res.status(200).json(newUser);
+		//next();
+	} catch (e) {
+		console.log('createUser error: ', e.message);
+		res.sendStatus(500);
+	}
 };
 
 const handleToken = async (req, res, next) => {
-  let { tokenId } = req.query;
-  if (!tokenId) return next('No token!');
-  try {
-    tokenId = await spotifyAccessToken(tokenId);
-    res.status(200).json(tokenId);
-    next();
-  } catch (e) {
-    console.log(e.message);
-    res.sendStatus(500) && next(e);
-  }
+	let { tokenId } = req.query;
+	if (!tokenId) return next('No token!');
+	try {
+		tokenId = await spotifyAccessToken(tokenId);
+		return res.status(200).json(tokenId);
+		//next();
+	} catch (e) {
+		console.log(e.message);
+		res.sendStatus(500) && next(e);
+	}
 };
 
 // const verifyUser = async (req, res, next) => {
@@ -51,72 +53,72 @@ const handleToken = async (req, res, next) => {
 // };
 
 const sendPlaylist = async (req, res, next) => {
-  try {
-    const playlist = await getPlaylist(req.body);
-    res.status(200).json(playlist);
-    next();
-  } catch (e) {
-    console.log(e.message);
-    res.sendStatus(500);
-    next(e);
-  }
+	try {
+		const playlist = await getPlaylist(req.body);
+		return res.status(200).json(playlist);
+		//next();
+	} catch (e) {
+		console.log(e.message);
+		res.sendStatus(500);
+		//next(e);
+	}
 };
 
 const sendPotentialLocations = async (req, res, next) => {
-  const { searchQuery } = req.body;
-  try {
-    // console.log('locations searched');
-    const searchResults = await getLocationSearchResults(searchQuery);
-    // console.log(searchResults);
-    return res.status(200).json(searchResults);
-    // next();
-  } catch (e) {
-    console.log(e.message);
-    res.sendStatus(500);
-    next(e);
-  }
+	const { searchQuery } = req.body;
+	try {
+		// console.log('locations searched');
+		const searchResults = await getLocationSearchResults(searchQuery);
+		// console.log(searchResults);
+		return res.status(200).json(searchResults);
+		// next();
+	} catch (e) {
+		console.log(e.message);
+		res.sendStatus(500);
+		//next(e);
+	}
 };
 
 const sendUserDetails = async (req, res, next) => {
-  const { id } = req.params;
-  try {
-    const user = await getUserDetails(id);
-    res.status(200).json(user);
-    next();
-  } catch (e) {
-    console.log(e.message);
-    res.sendStatus(500);
-    next(e);
-  }
+	const { id } = req.params;
+	try {
+		const user = await getUserDetails(id);
+		return res.status(200).json(user);
+		//next();
+	} catch (e) {
+		console.log(e.message);
+		res.sendStatus(500);
+		//next(e);
+	}
 };
 
 const sendSpotifyOAuthToken = async (req, res, next) => {
-  const { code } = req.body;
-  try {
-    let token;
-    if (code) {
-      const newSpotifyToken = await spotifyAccessTokenOAuth(code);
-      token = newSpotifyToken.access_token;
-    } else {
-      const spotifyToken = await Token.findOne({ source: 'Spotify OAuth' })
-        .limit(1)
-        .sort({ $natural: -1 });
-      token = spotifyToken.tokenId;
-    }
-    res.status(200).json(token);
-    next();
-  } catch (e) {
-    console.log(e.message);
-    res.sendStatus(500);
-    next(e);
-  }
+	const { code } = req.body;
+	try {
+		let token;
+		if (code) {
+			const newSpotifyToken = await spotifyAccessTokenOAuth(code);
+			token = newSpotifyToken.access_token;
+		} else {
+			const spotifyToken = await Token.findOne({ source: 'Spotify OAuth' })
+				.limit(1)
+				.sort({ $natural: -1 });
+			token = spotifyToken.tokenId;
+		}
+		return res.status(200).json(token);
+		//next();
+	} catch (e) {
+		console.log(e.message);
+		res.sendStatus(500);
+		//next(e);
+	}
 };
 
 module.exports = {
-  createUser,
-  handleToken,
-  sendPlaylist,
-  sendPotentialLocations,
-  sendUserDetails,
-  sendSpotifyOAuthToken,
+	createUser,
+	handleToken,
+	sendPlaylist,
+	sendPotentialLocations,
+	sendUserDetails,
+	sendSpotifyOAuthToken,
 };
