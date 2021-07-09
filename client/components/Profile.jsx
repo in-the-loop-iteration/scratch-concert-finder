@@ -15,7 +15,7 @@ const Profile = () => {
 
   const handleFetchUser = async () => {
     // This is a placeholder. When you know what user is logged in, you should replace null with the user's id
-    const loggedInUserId = null;
+    const loggedInUserId = null // '60d7870b938dce51e194dc4c';
     if (loggedInUserId) {
       setUser(await FetchUserDetails({ id: loggedInUserId }));
     } else {
