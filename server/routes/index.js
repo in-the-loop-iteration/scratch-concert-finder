@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const controllers = require('../controllers');
 
+// modularize routes with anonymous functions and middlewares to be shared between routes
 router.get('/playlist', controllers.sendPlaylist);
 router.get('/location-search', controllers.sendPotentialLocations);
 router.post('/signup', controllers.createUser);

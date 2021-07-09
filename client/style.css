@@ -7,6 +7,8 @@
     border-bottom: 2px solid white;
 } */
 
+/* split into several css modules / create css for better cascading */
+
 #slide {
     position: absolute;
     left: -100px;
@@ -180,6 +182,7 @@ width: 20px;
 color: var(--gray)
 }
 
+/* cater to smaller screen with media query / MaterialUI */
 .footer{
     position: fixed;
     left: 0;
