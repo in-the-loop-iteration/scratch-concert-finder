@@ -94,6 +94,7 @@ const sendUserDetails = async (req, res, next) => {
 const sendSpotifyOAuthToken = async (req, res, next) => {
   const { code } = req.body;
   try {
+    console.log('code: ', code);
     let token;
     if (code) {
       const newSpotifyToken = await spotifyAccessTokenOAuth(code);
@@ -102,7 +103,8 @@ const sendSpotifyOAuthToken = async (req, res, next) => {
       const spotifyToken = await Token.findOne({ source: 'Spotify OAuth' })
         .limit(1)
         .sort({ $natural: -1 });
-      token = spotifyToken.tokenId;
+      console.log('spotifyToken: ', spotifyToken);
+      token = spotifyToken ? spotifyToken.tokenId : null;
     }
     res.status(200).json(token);
     next();
