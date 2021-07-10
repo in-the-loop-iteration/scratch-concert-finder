@@ -1,7 +1,7 @@
 .header {
   font-family: var(--ff-header);
   color: var(--clr-fifth);
-  font-size: 100px;
+  font-size: 75px;
   text-align: center;
   background-color: var(--clr-third);
   width: 100%;
