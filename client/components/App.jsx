@@ -16,7 +16,7 @@ const App = () => (
   <ChakraProvider theme={theme}>
     <Router>
       <Switch>
-        <Route path="/homepage">
+        <Route path="/home">
           <Homepage />
         </Route>
         <Route path="/callback/">
