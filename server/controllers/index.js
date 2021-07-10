@@ -85,31 +85,6 @@ const sendSpotifyOAuthToken = async (req, res, next) => {
 	}
 };
 
-// double check whether this functionality is already in place
-const sendSpotifyOAuthToken = async (req, res, next) => {
-	const { code } = req.body;
-	try {
-		console.log('code: ', code);
-		let token;
-		if (code) {
-			const newSpotifyToken = await spotifyAccessTokenOAuth(code);
-			token = newSpotifyToken.access_token;
-		} else {
-			const spotifyToken = await Token.findOne({ source: 'Spotify OAuth' })
-				.limit(1)
-				.sort({ $natural: -1 });
-			console.log('spotifyToken: ', spotifyToken);
-			token = spotifyToken ? spotifyToken.tokenId : null;
-		}
-		res.status(200).json(token);
-		next();
-	} catch (e) {
-		console.log(e.message);
-		res.sendStatus(500);
-		next(e);
-	}
-};
-
 module.exports = {
 	handleToken,
 	sendPlaylist,
