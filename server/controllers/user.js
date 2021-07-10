@@ -66,7 +66,14 @@ userController.logIn = async (req, res) => {
 			{ expiresIn: '1h' }
 		);
 
-		res.status(200).json({ accessToken: token });
+		res
+			.status(200)
+			.json({
+				accessToken: token,
+				name: existingUser.name,
+				email: existingUser.email,
+				id: existingUser._id,
+			});
 	} catch (error) {
 		console.log('signIn controllers Error: ', error);
 		res.status(500).json({ message: 'something went wrong at logIn' });
