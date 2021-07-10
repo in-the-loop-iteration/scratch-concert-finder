@@ -1,18 +1,9 @@
 import React from 'react';
-import {
-  Box,
-  Stack,
-} from '@chakra-ui/react';
+import '../css/footer.css';
 
 // create our copyright
 const Footer = () => (
-  <div className="footer">
-    <Box bg={'white'} role="contentinfo" mx="auto" w={'100%'} h={8}>
-      <Stack>
-        <div className="footer-text">Copyright 2021 Tassled Wobbegong</div>
-      </Stack>
-    </Box>
-  </div>
+	<footer className='footer'>Copyright 2021 Tassled Wobbegong</footer>
 );
 
 export default Footer;
