@@ -1,0 +1,19 @@
+
+
+.footer{
+  width: 100%;
+  background-color: var(--clr-third);
+  color: var(--clr-fifth);
+  text-align: center;
+  font-family: var(--ff-body);
+  font-weight: 500;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+}
+
+.footer-text{
+  position: absolute;
+  left: 0;
+  margin-left: 10px
+}
