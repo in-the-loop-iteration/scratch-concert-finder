@@ -17,6 +17,7 @@ import extractQueryParams from '../utils/extractQueryParams.js';
 import Player from './Player';
 import SearchResults from './SearchResults';
 import '../css/search.css';
+import Concert from '../images/aditya-chinchure-ZhQCZjr9fHo-unsplash.jpg'
 
 const Search = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -51,8 +52,12 @@ const Search = () => {
 
 	return (
 		<div className='search'>
+      <img className='searchimg' src={Concert} alt='picture of concert'></img>
+      <div className='searchbox'>
 			<div className='searchbar'>
+        <div className='infoicon'>
 				<InfoOutlineIcon onClick={onOpen} cursor='pointer' />
+        </div>
 				<Input
 					className='input'
 					placeholder='Enter your Zip Code to hear artists playing near you'
@@ -65,7 +70,7 @@ const Search = () => {
 				/>
 			</div>
 			<div className='searchResults'>
-				<p>Search for concerts and events near you!</p>
+				{/* <p>Search for concerts and events near you!</p> */}
 
 				{searchResults.length > 0 && playlist.length === 0 && (
 					<SearchResults
@@ -78,6 +83,7 @@ const Search = () => {
 					<Player spotifyToken={spotifyToken} playlist={playlist} />
 				)}
 			</div>
+      </div>
 
 			<div className='sidepanel'>
 				<Drawer placement='right' onClose={onClose} isOpen={isOpen} w={'25%'}>
