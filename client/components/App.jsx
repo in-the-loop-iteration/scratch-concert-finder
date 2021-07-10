@@ -5,6 +5,7 @@ import Search from './Search';
 import Profile from './Profile';
 import Footer from './Footer';
 import Header from './header';
+import Homepage from './Homepage';
 import '../style.css';
 
 const theme = extendTheme({});
@@ -15,6 +16,9 @@ const App = () => (
   <ChakraProvider theme={theme}>
     <Router>
       <Switch>
+        <Route path="/homepage">
+          <Homepage />
+        </Route>
         <Route path="/callback/">
           <Search />
         </Route>
