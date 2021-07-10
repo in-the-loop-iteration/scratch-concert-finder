@@ -2,7 +2,11 @@ import React from 'react';
 import '../css/header.css'
 
 const Header = () => (
-  <h1 className='header'>In The Loop ∞</h1>
+  <div className='header'>
+    <div className='headerText'>
+  <h1>In The Loop ∞</h1>
+  </div>
+  </div>
 );
 
 export default Header;

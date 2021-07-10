@@ -51,8 +51,11 @@ const Search = () => {
 
 	return (
 		<div className='search'>
+      <div className='searchbox'>
 			<div className='searchbar'>
+        <div className='infoicon'>
 				<InfoOutlineIcon onClick={onOpen} cursor='pointer' />
+        </div>
 				<Input
 					className='input'
 					placeholder='Enter your Zip Code to hear artists playing near you'
@@ -78,6 +81,7 @@ const Search = () => {
 					<Player spotifyToken={spotifyToken} playlist={playlist} />
 				)}
 			</div>
+      </div>
 
 			<div className='sidepanel'>
 				<Drawer placement='right' onClose={onClose} isOpen={isOpen} w={'25%'}>

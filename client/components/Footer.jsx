@@ -3,7 +3,7 @@ import '../css/footer.css';
 
 // create our copyright
 const Footer = () => (
-	<footer className='footer'>Copyright 2021 Tassled Wobbegong</footer>
+	<footer className='footer'>Copyright 2021 Tassled Wobbegong + Jellies</footer>
 );
 
 export default Footer;

@@ -1,18 +1,24 @@
 
 .search{
-  margin: auto;
-  width: 25%;
+  width: 100%;
+  height: 87%;
   padding: 10px;
   display: flex;
   flex-direction: column;
-  align-content: center;
-  justify-content: center;
-  margin-top: 200px;
+  padding: 100px;
+  align-items: center;
 }
 
-.searchResults {
+.infoicon{
+  padding: 0;
+  padding-right: 100%;
+}
+
+.searchbox {
+  width: 25%;
   text-align: center;
 }
+
 
 .input {
   text-align: center;
