@@ -8,7 +8,7 @@ const userController = {};
 userController.signUp = async (req, res) => {
 	//getting userInfo from req.body
 	console.log('hitting signUp');
-	console.log('req.body is:', req.body);
+	// console.log('req.body is:', req.body);
 	const { email, password, firstName, lastName } = req.body;
 
 	try {
