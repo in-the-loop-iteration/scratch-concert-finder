@@ -1,10 +1,12 @@
 import React from 'react';
-import Concert from '../images/aditya-chinchure-ZhQCZjr9fHo-unsplash.jpg'
+import Concert from '../images/bruno-emmanuelle-Gi6-m_t_W-E-unsplash.jpg'
+import {Link} from 'react-router-dom'
+import "../css/homepage.css"
 
 const Homepage = () => {
   return (
-<div>
-  <img src={Concert} alt='concert picture' />
+<div className='homepage'>
+  <Link to='/search'><img src={Concert} alt='concert picture' /> </Link>
 </div>
   )
 }
