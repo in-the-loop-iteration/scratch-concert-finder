@@ -1,10 +1,10 @@
 import React from 'react';
-import { Center } from '@chakra-ui/react';
 
-const SearchResults = ({ searchResults, handlePlaylist }) => (
+const SearchResults = ({ searchResults, handlePlaylist }) => {
+  console.log(searchResults)
+  return (
   <div className="placePanel" style={{ cursor: 'pointer' }}>
     {searchResults.map((result, i) => (
-      
         <div
           onClick={() => handlePlaylist(result)}
           key={i}
@@ -17,6 +17,7 @@ const SearchResults = ({ searchResults, handlePlaylist }) => (
       
     ))}
   </div>
-);
+)
+    };
 
 export default SearchResults;
