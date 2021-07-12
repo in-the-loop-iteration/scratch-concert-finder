@@ -35,6 +35,17 @@ const getPlaylist = async ({ placeId }) => {
           console.log(response.data);
           return response.data.items[0].id.videoId
         });
+        const payload = {
+          title: title.replace(/[^\w\s]/gi, ''),
+          videoId: youtubeSearchResults,
+          venue: venue.name,
+          address: venue.formatted_address,
+          location,
+          start,
+          end,
+          distance,
+          ticketsLink: `https://www.google.com/search?q=${titleScrubbed}+tickets`,
+        };
         // const artistSearchResults = await spotifyArtistSearch({
         //   title: titleScrubbed,
         //   spotifyToken,
@@ -78,8 +89,8 @@ const getPlaylist = async ({ placeId }) => {
         //     ticketPriceRange: [],
         //     ticketsLink: `https://www.google.com/search?q=${title}+tickets`,
         //   })) || [];
-        console.log(youtubeSearchResults);
-        return youtubeSearchResults;
+        console.log(payload);
+        return payload;
       })
     );
     // const playlist = [].concat.apply([], p.filter((e) => !!e))
