@@ -37,10 +37,10 @@ app.get('/*', (req, res) => {
 	return res.status(200).sendFile(path.resolve(__dirname, '../index.html'));
 });
 
-// Error Handlers
-app.use((req, res) =>
-	res.status(404).send("This is not the page you're looking for...")
-);
+// // Error Handlers
+// app.use((req, res) =>
+// 	res.status(404).send("This is not the page you're looking for...")
+// );
 
 // handle unknown routes
 app.use('*', (req, res) => {

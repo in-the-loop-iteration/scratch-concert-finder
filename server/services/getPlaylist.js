@@ -11,8 +11,8 @@ const getPlaylist = async ({ placeId }) => {
   try {
     const coordinates = await googleMapsPlaceLatLong(placeId);
     let concerts = (await predictHQConcerts(coordinates));
-    console.log(concerts);
-    concerts = concerts.slice(0,1);
+    console.log(JSON.stringify(concerts, null, 2));
+    concerts = concerts.slice(0,2);
     // const spotifyToken = await spotifyAccessToken();
     const playlist = await Promise.all(
       concerts.map(async (concert) => {
@@ -29,7 +29,7 @@ const getPlaylist = async ({ placeId }) => {
         /* to work on */
         const config = {
           method: 'get',
-          url: `https://www.googleapis.com/youtube/v3/search?key=${youtubeApiKey}&part=snippet&q=${titleScrubbed}&order=viewCount&type=video&videoDefinition=high&videoEmbeddable=true`,
+          url: `https://www.googleapis.com/youtube/v3/search?key=${youtubeApiKey}&part=snippet&q=${titleScrubbed}+concert&order=relevance&type=video&videoDefinition=high&videoEmbeddable=true`,
         };
         const youtubeSearchResults = await axios(config).then((response) => {
           console.log(response.data);
