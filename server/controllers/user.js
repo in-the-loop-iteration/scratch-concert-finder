@@ -29,7 +29,10 @@ userController.signUp = async (req, res) => {
 			name: `${firstName} ${lastName}`,
 		});
 		console.log('newUser is: ', newUser);
-		return res.status(200).json({ message: 'newUser created' });
+		return res.status(200).json({
+      email: email,
+      name: `${firstName} ${lastName}`,
+    });
 	} catch (error) {
 		res.status(500).json({ message: 'something went wrong at signUp' });
 		console.log('err in signUp controller: ', error);
@@ -66,7 +69,14 @@ userController.logIn = async (req, res) => {
 			{ expiresIn: '1h' }
 		);
 
-		res.status(200).json({ accessToken: token });
+		res
+			.status(200)
+			.json({
+				accessToken: token,
+				name: existingUser.name,
+				email: existingUser.email,
+				id: existingUser._id,
+			});
 	} catch (error) {
 		console.log('signIn controllers Error: ', error);
 		res.status(500).json({ message: 'something went wrong at logIn' });
