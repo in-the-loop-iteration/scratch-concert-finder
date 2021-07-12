@@ -23,7 +23,7 @@ const Search = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [search, setSearch] = useState('');
 	const [searchResults, setSearchResults] = useState([]);
-	const [playlist, setPlaylist] = useState([]);
+	const [playlist, setPlaylist] = useState('');
 	const [spotifyToken, setSpotifyToken] = useState('');
 	const [loading, setLoading] = useState(true);
 
@@ -72,14 +72,14 @@ const Search = () => {
 			<div className='searchResults'>
 				{/* <p>Search for concerts and events near you!</p> */}
 
-				{searchResults.length > 0 && playlist.length === 0 && (
+				{searchResults.length > 0 && playlist === '' && (
 					<SearchResults
 						searchResults={searchResults}
 						handlePlaylist={handlePlaylist}
 						className='place-item'
 					/>
 				)}
-				{playlist.length > 0 && (
+				{playlist !== '' && (
 					<Player spotifyToken={spotifyToken} playlist={playlist} />
 				)}
 			</div>
