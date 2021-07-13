@@ -34,7 +34,12 @@ const IPodGraphic = ({ playlist, searchResults }) => {
       </div>
       <div className="navigator">        
           <div className="keys">                   
-              <span className="menu-btn">MENU</span>
+              <span 
+                className="tickets-btn"
+                onClick={() => open(playlist[playlistIdx].ticketsLink)}
+              >
+                TICKETS
+              </span>
             
               <img
                 className="fwd" 

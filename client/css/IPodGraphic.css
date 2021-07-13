@@ -91,18 +91,18 @@ box-shadow: 0px 0px 22px 3px rgba(0,166,255,0.32);
 }
 
 
-.menu-btn{
+.tickets-btn {
   display: block;
   position: absolute;
   top: 32px;
-  left: 107px;
+  left: 96px;
   font-family: arial;
   font-weight: bold;
   font-size: 16px;
   color: gray;
 }
 
-.menu-btn:hover{
+.tickets-btn:hover{
   color: #00a6ff;
   /* duration / speed */
   -webkit-transition: all 0.2s;
