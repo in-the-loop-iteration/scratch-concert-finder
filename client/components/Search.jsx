@@ -8,7 +8,7 @@ import {
 	DrawerHeader,
 	DrawerContent,
 } from '@chakra-ui/react';
-import { InfoOutlineIcon } from '@chakra-ui/icons';
+import { ChevronLeftIcon } from '@chakra-ui/icons';
 import FetchMapSearchResults from '../api/FetchMapSearchResults';
 import FetchPlaylist from '../api/FetchPlaylist';
 import Profile from '/client/components/Profile.jsx';
@@ -40,7 +40,15 @@ const Search = () => {
 
 	const handleSearchForLocation = async () => {
 		const results = await FetchMapSearchResults({ searchQuery: search });
-		setSearchResults(results);
+    let filteredResults = [];
+    for (let i = 0; i<results.length; i++){
+      //console.log(results[i].description[0]*1);
+      if (Number.isNaN(results[i].description[0]*1)){
+        filteredResults.push(results[i])
+      }
+    }
+    console.log(filteredResults);
+		setSearchResults(filteredResults);
 	};
 
 	const handlePlaylist = async (result) => {
@@ -52,16 +60,20 @@ const Search = () => {
 
 	return (
 		<div className='search'>
+      <div className='infoicon'>
+				<ChevronLeftIcon 
+          w={6}
+          h={6}
+          onClick={onOpen} 
+          cursor='pointer' />
+      </div>
       <img className='searchimg' src={Concert} alt='picture of concert'></img>
       <div className='searchbox'>
 			<div className='searchbar'>
-        <div className='infoicon'>
-				<InfoOutlineIcon onClick={onOpen} cursor='pointer' />
-        </div>
 				<Input
 					className='input'
 					placeholder='Enter your Zip Code to hear artists playing near you'
-					onChange={(e) => setSearch(e.target.value)}
+					onChange={(e) => {setSearch(e.target.value)}}
 					onKeyDown={(e) => {
 						if (e.key === 'Enter') {
 							handleSearchForLocation();
@@ -83,19 +95,19 @@ const Search = () => {
 					<Player spotifyToken={spotifyToken} playlist={playlist} />
 				)}
 			</div>
-      </div>
+    </div>
 
-			<div className='sidepanel'>
-				<Drawer placement='right' onClose={onClose} isOpen={isOpen} w={'25%'}>
-					<DrawerOverlay />
-					<DrawerContent>
-						<DrawerHeader borderBottomWidth='1px'>Your Profile</DrawerHeader>
-						<DrawerBody>
-							<Profile />
-						</DrawerBody>
-					</DrawerContent>
-				</Drawer>
-			</div>
+      <div className='sidepanel'>
+        <Drawer placement='right' onClose={onClose} isOpen={isOpen} w={'25%'}>
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerHeader borderBottomWidth='1px'>Your Profile</DrawerHeader>
+            <DrawerBody>
+              <Profile />
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
+      </div>
 		</div>
 	);
 };
