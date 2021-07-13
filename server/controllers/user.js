@@ -14,7 +14,7 @@ userController.signUp = async (req, res) => {
 	try {
 		// ! find user by email in db, double check
 		const existingUser = await User.findOne({ email });
-		console.log('existingUser is: ', existingUser);
+		//console.log('existingUser is: ', existingUser);
 		//if user already existed, return email in use
 		if (existingUser)
 			return res.status(400).json({ message: 'email already used' });
@@ -23,16 +23,18 @@ userController.signUp = async (req, res) => {
 		const hashedPassword = await bcrypt.hash(password, 12);
 
 		//create new user
+		// convert email to lowercase
+		const lowerEmail = email.toLowerCase();
 		const newUser = await User.create({
-			email,
+			email: lowerEmail,
 			password: hashedPassword,
 			name: `${firstName} ${lastName}`,
 		});
 		console.log('newUser is: ', newUser);
 		return res.status(200).json({
-      email: email,
-      name: `${firstName} ${lastName}`,
-    });
+			email: lowerEmail,
+			name: `${firstName} ${lastName}`,
+		});
 	} catch (error) {
 		res.status(500).json({ message: 'something went wrong at signUp' });
 		console.log('err in signUp controller: ', error);
@@ -43,9 +45,12 @@ userController.logIn = async (req, res) => {
 	//getting userInfo from req.body
 	console.log('hitting logIn');
 	const { email, password } = req.body;
+	const lowerEmail = email.toLowerCase();
+	console.log(email, password);
+	console.log(lowerEmail);
 	try {
-		const existingUser = await User.findOne({ email });
-		//console.log('existingUser in logIn is: ', existingUser);
+		const existingUser = await User.findOne({ email: lowerEmail });
+		console.log('existingUser in logIn is: ', existingUser);
 
 		// if existingUser is undefine, return user not found
 		if (!existingUser)
@@ -58,8 +63,8 @@ userController.logIn = async (req, res) => {
 		);
 
 		//if password is not correct, return incorrect password
-		if (!isPasswordCorrect)
-			return res.status(400).json({ message: 'Incorrect Password' });
+		if (!isPasswordCorrect) console.log('Incorrect Password');
+		return res.status(400).json({ message: 'Incorrect Password' });
 
 		//JWT token, user session will expire in 1 hour
 		// ? what else should include in the JWT to send to the client side?
@@ -69,14 +74,13 @@ userController.logIn = async (req, res) => {
 			{ expiresIn: '1h' }
 		);
 
-		res
-			.status(200)
-			.json({
-				accessToken: token,
-				name: existingUser.name,
-				email: existingUser.email,
-				id: existingUser._id,
-			});
+		res.status(200).json({
+			message: 'log in successfully',
+			name: existingUser.name,
+			email: existingUser.email,
+			id: existingUser._id,
+			accessToken: token,
+		});
 	} catch (error) {
 		console.log('signIn controllers Error: ', error);
 		res.status(500).json({ message: 'something went wrong at logIn' });
