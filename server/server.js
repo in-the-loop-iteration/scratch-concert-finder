@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const { port } = config;
 
-const routes = require('./routes/index');
+const apiRouter = require('./routes/index');
 const userRouter = require('./routes/user');
 
 app.use(express.json());
@@ -30,17 +30,17 @@ app.use('/build', express.static(path.resolve(__dirname, '../build')));
  */
 
 // todo: import more routes later
-app.use('/api', routes);
+app.use('/api', apiRouter);
 app.use('/user', userRouter);
 
 app.get('/*', (req, res) => {
 	return res.status(200).sendFile(path.resolve(__dirname, '../index.html'));
 });
 
-// Error Handlers
-app.use((req, res) =>
-	res.status(404).send("This is not the page you're looking for...")
-);
+// // Error Handlers
+// app.use((req, res) =>
+// 	res.status(404).send("This is not the page you're looking for...")
+// );
 
 // handle unknown routes
 app.use('*', (req, res) => {
