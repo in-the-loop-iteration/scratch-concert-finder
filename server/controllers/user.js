@@ -77,7 +77,6 @@ userController.logIn = async (req, res) => {
 		);
 
 		res.status(200).json({
-			message: 'log in successfully',
 			name: existingUser.name,
 			email: existingUser.email,
 			id: existingUser._id,
