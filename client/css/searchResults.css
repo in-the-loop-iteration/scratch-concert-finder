@@ -7,3 +7,7 @@
   max-height: 250px;
   overflow-y: auto;
 }
+
+.place-item {
+  padding: 5px;
+}
