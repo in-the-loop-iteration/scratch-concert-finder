@@ -47,7 +47,7 @@ const Search = () => {
         filteredResults.push(results[i])
       }
     }
-    console.log(filteredResults);
+    //console.log(filteredResults);
 		setSearchResults(filteredResults);
 	};
 
@@ -60,21 +60,29 @@ const Search = () => {
 
 	return (
 		<div className='search'>
-      <div className='infoicon'>
+      <div className='infoIcon'>
 				<ChevronLeftIcon 
           w={6}
           h={6}
           onClick={onOpen} 
           cursor='pointer' />
       </div>
-      <img className='searchimg' src={Concert} alt='picture of concert'></img>
-      <div className='searchbox'>
-			<div className='searchbar'>
+      <img className='searchImg' src={Concert} alt='picture of concert'></img>
+      <div className='searchBox'>
+			<div className='searchBar'>
 				<Input
 					className='input'
 					placeholder='Enter your Zip Code to hear artists playing near you'
-					onChange={(e) => {setSearch(e.target.value)}}
-					onKeyDown={(e) => {
+					// onChange={(e) => {
+          //   setSearch(e.target.value)}}
+
+      onInput={(e) => {
+        //console.log('this is oninput', e.target.value)
+        setSearch(e.target.value)
+        //console.log('this is in setsearch', search)
+      }}
+					
+        onKeyDown={(e) => {
 						if (e.key === 'Enter') {
 							handleSearchForLocation();
 						}
@@ -97,7 +105,7 @@ const Search = () => {
 			</div>
     </div>
 
-      <div className='sidepanel'>
+      <div className='sidePanel'>
         <Drawer placement='right' onClose={onClose} isOpen={isOpen} w={'25%'}>
           <DrawerOverlay />
           <DrawerContent>

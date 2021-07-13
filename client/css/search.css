@@ -12,7 +12,7 @@
   background: linear-gradient(90deg, rgba(168,218,220,1) 0%, rgba(241,250,238,1) 50%, rgba(69,123,157,1) 100%);
 }
 
-.infoicon {
+.infoIcon {
   position: absolute;
   top: 10px;
   right: 0;
@@ -25,7 +25,7 @@
   border-radius: 10px;
 }
 
-.searchbox {
+.searchBox {
   min-width: 400px;
   width: 25%;
   margin-top: 20px;
@@ -36,6 +36,6 @@
   text-align: center;
 }
 
-.searchimg {
+.searchImg {
   height: 75%;
 }

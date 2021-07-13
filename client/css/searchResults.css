@@ -1,0 +1,9 @@
+.placePanel {
+  border: solid, 5px;
+  color: var(--clr-fourth);
+  background-color: var(--clr-secondary);
+  border-radius: 10px;
+  opacity: .5;
+  max-height: 250px;
+  overflow-y: auto;
+}

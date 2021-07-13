@@ -26,12 +26,13 @@ body {
 }
 .header{
     background-color: black;
-    /* opacity: .5; */
+    opacity: .5;
     position:fixed;
     top: 0;
     left: 0
   }
-code {
+
+  code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }

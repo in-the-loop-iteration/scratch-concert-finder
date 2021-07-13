@@ -1,4 +1,5 @@
 import React from 'react';
+import '../css/searchResults.css'
 
 const SearchResults = ({ searchResults, handlePlaylist }) => {
   console.log(searchResults)
