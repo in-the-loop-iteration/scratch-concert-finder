@@ -29,7 +29,10 @@ userController.signUp = async (req, res) => {
 			name: `${firstName} ${lastName}`,
 		});
 		console.log('newUser is: ', newUser);
-		return res.status(200).json({ message: 'newUser created' });
+		return res.status(200).json({
+      email: email,
+      name: `${firstName} ${lastName}`,
+    });
 	} catch (error) {
 		res.status(500).json({ message: 'something went wrong at signUp' });
 		console.log('err in signUp controller: ', error);
