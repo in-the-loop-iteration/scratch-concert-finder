@@ -95,7 +95,7 @@ const getPlaylist = async ({ placeId }) => {
     );
     // const playlist = [].concat.apply([], p.filter((e) => !!e))
     console.log(playlist);
-    return playlist;
+    return playlist.filter(item => item !== undefined);
   } catch (e) {
     throw new Error(`getPlaylist error: ${e.message}`);
   }
