@@ -40,7 +40,15 @@ const Search = () => {
 
 	const handleSearchForLocation = async () => {
 		const results = await FetchMapSearchResults({ searchQuery: search });
-		setSearchResults(results);
+    let filteredResults = [];
+    for (let i = 0; i<results.length; i++){
+      //console.log(results[i].description[0]*1);
+      if (Number.isNaN(results[i].description[0]*1)){
+        filteredResults.push(results[i])
+      }
+    }
+    console.log(filteredResults);
+		setSearchResults(filteredResults);
 	};
 
 	const handlePlaylist = async (result) => {
@@ -65,7 +73,7 @@ const Search = () => {
 				<Input
 					className='input'
 					placeholder='Enter your Zip Code to hear artists playing near you'
-					onChange={(e) => setSearch(e.target.value)}
+					onChange={(e) => {setSearch(e.target.value)}}
 					onKeyDown={(e) => {
 						if (e.key === 'Enter') {
 							handleSearchForLocation();
