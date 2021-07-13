@@ -5,7 +5,7 @@ const Header = () => {
   return(
   <div className='header'>
     <div className='headerText'>
-  <h1>In The Loop ∞</h1>
+  <h1>In The L∞p </h1>
   </div>
   </div>
   )
