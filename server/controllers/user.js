@@ -63,8 +63,10 @@ userController.logIn = async (req, res) => {
 		);
 
 		//if password is not correct, return incorrect password
-		if (!isPasswordCorrect) console.log('Incorrect Password');
-		return res.status(400).json({ message: 'Incorrect Password' });
+		if (!isPasswordCorrect) {
+			console.log('Incorrect Password');
+			return res.status(400).json({ message: 'Incorrect Password' });
+		}
 
 		//JWT token, user session will expire in 1 hour
 		// ? what else should include in the JWT to send to the client side?
