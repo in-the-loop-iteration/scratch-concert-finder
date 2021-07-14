@@ -44,6 +44,10 @@ body {background-color: #2e2e2e;}
           border-radius: 5px;
 }
 
+iframe {
+  pointer-events: none;
+}
+
 .playlist-item {
   z-index: 1;
   max-height: 200px;

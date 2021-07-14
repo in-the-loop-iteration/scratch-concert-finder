@@ -39,8 +39,10 @@ const IPodGraphic = ({ play, setPlay, playlistIdx, setPlaylistIdx, playlist, sea
                 width="250" 
                 height="190"
                 src={ play ?
-                  `https://www.youtube.com/embed/${playlist[playlistIdx].videoId}?controls=0&autoplay=1`
-                  : `https://www.youtube.com/embed/${playlist[playlistIdx].videoId}?controls=0`} 
+                  `https://www.youtube.com/embed/${playlist[playlistIdx].videoId}?
+                    controls=0&autohide=1&autoplay=1`
+                  : `https://www.youtube.com/embed/${playlist[playlistIdx].videoId}?
+                    controls=0&showinfo=0`} 
                 title="YouTube video player" 
                 frameBorder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
