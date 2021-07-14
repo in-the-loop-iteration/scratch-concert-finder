@@ -21,14 +21,9 @@
   background-color: white;
 }
 
-.searchImg {
-  border-radius: 10px;
-}
-
 .searchbox {
   min-width: 400px;
   width: 25%;
-  margin-top: 20px;
   text-align: center;
 }
 

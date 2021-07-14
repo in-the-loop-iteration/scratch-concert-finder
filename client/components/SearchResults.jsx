@@ -1,7 +1,6 @@
 import React from 'react';
 
 const SearchResults = ({ searchResults, handlePlaylist }) => {
-  console.log(searchResults)
   return (
   <div className="placePanel" style={{ cursor: 'pointer' }}>
     {searchResults.map((result, i) => (

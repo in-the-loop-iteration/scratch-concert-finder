@@ -9,6 +9,7 @@ import {
 	DrawerContent,
 } from '@chakra-ui/react';
 import { ChevronLeftIcon } from '@chakra-ui/icons';
+import IPodGraphic from './IPodGraphic';
 import FetchMapSearchResults from '../api/FetchMapSearchResults';
 import FetchPlaylist from '../api/FetchPlaylist';
 import Profile from '/client/components/Profile.jsx';
@@ -17,7 +18,6 @@ import extractQueryParams from '../utils/extractQueryParams.js';
 import Player from './Player';
 import SearchResults from './SearchResults';
 import '../css/search.css';
-import Concert from '../images/aditya-chinchure-ZhQCZjr9fHo-unsplash.jpg'
 
 const Search = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -47,7 +47,7 @@ const Search = () => {
         filteredResults.push(results[i])
       }
     }
-    console.log(filteredResults);
+    // console.log(filteredResults);
 		setSearchResults(filteredResults);
 	};
 
@@ -67,39 +67,11 @@ const Search = () => {
           onClick={onOpen} 
           cursor='pointer' />
       </div>
-      <img className='searchimg' src={Concert} alt='picture of concert'></img>
-      <div className='searchbox'>
-			<div className='searchbar'>
-				<Input
-					className='input'
-					placeholder='Enter your Zip Code to hear artists playing near you'
-					onChange={(e) => {setSearch(e.target.value)}}
-					onKeyDown={(e) => {
-						if (e.key === 'Enter') {
-							handleSearchForLocation();
-						}
-					}}
-				/>
-			</div>
-			<div className='searchResults'>
-				{/* <p>Search for concerts and events near you!</p> */}
-
-				{searchResults.length > 0 && (! playlist || playlist.length === 0) && (
-					<SearchResults
-						searchResults={searchResults}
-						handlePlaylist={handlePlaylist}
-						className='place-item'
-					/>
-				)}
-				{searchResults.length > 0 && (Array.isArray(playlist) && playlist.length === 0) && (
-					<div>No concerts found in the area!</div>
-				)}
-				{Array.isArray(playlist) && playlist.length > 0 && (
-					<Player spotifyToken={spotifyToken} playlist={playlist} />
-				)}
-			</div>
-    </div>
-
+      <IPodGraphic 
+        playlist={playlist}
+        searchResults={searchResults}
+        key={Date.now().toString}
+        />
       <div className='sidepanel'>
         <Drawer placement='right' onClose={onClose} isOpen={isOpen} w={'25%'}>
           <DrawerOverlay />
@@ -110,6 +82,29 @@ const Search = () => {
             </DrawerBody>
           </DrawerContent>
         </Drawer>
+      </div>
+      <div className='searchbox'>
+        <div className='searchbar'>
+          <Input
+            className='input'
+            placeholder='Enter your Zip Code to hear artists playing near you'
+            onChange={(e) => {setSearch(e.target.value)}}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleSearchForLocation();
+              }
+            }}
+          />
+        </div>
+        <div className='searchResults'>
+          {searchResults.length > 0 && (! playlist || playlist.length === 0) && (
+            <SearchResults
+              searchResults={searchResults}
+              handlePlaylist={handlePlaylist}
+              className='place-item'
+            />
+          )}
+        </div>
       </div>
 		</div>
 	);
