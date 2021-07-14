@@ -64,8 +64,10 @@ const Search = () => {
 				<ChevronLeftIcon 
           w={6}
           h={6}
-          onClick={onOpen} 
-          cursor='pointer' />
+          onClick={onOpen}
+          onKeyPress={(e) => e.key === 'Enter' || ' ' ? onOpen() : e}
+          cursor='pointer'
+          tabIndex={0} />
       </div>
       <IPodGraphic 
         playlist={playlist}
