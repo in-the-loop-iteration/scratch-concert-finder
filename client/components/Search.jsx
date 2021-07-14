@@ -60,7 +60,7 @@ const Search = () => {
 
 	return (
 		<div className='search'>
-      <div className='infoicon'>
+      <div className='infoIcon'>
 				<ChevronLeftIcon 
           w={6}
           h={6}
@@ -72,7 +72,7 @@ const Search = () => {
         searchResults={searchResults}
         key={Date.now().toString}
         />
-      <div className='sidepanel'>
+      <div className='sidePanel'>
         <Drawer placement='right' onClose={onClose} isOpen={isOpen} w={'25%'}>
           <DrawerOverlay />
           <DrawerContent>
@@ -83,8 +83,8 @@ const Search = () => {
           </DrawerContent>
         </Drawer>
       </div>
-      <div className='searchbox'>
-        <div className='searchbar'>
+      <div className='searchBox'>
+        <div className='searchBar'>
           <Input
             className='input'
             placeholder='Enter your Zip Code to hear artists playing near you'
