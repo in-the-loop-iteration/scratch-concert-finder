@@ -13,6 +13,7 @@ const config = {
   predictHqClientId: process.env.PREDICT_HQ_CLIENT_ID,
   predictHqClientSecret: process.env.PREDICT_HQ_CLIENT_SECRET,
   predictHqClientTemporaryToken: process.env.PREDICT_HQ_TEMPORARY_TOKEN,
+  youtubeApiKey: process.env.YOUTUBE_API_KEY,
 };
 
 module.exports = config;

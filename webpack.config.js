@@ -1,8 +1,11 @@
 const path = require('path');
+const HtmlWepackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-  entry: ['babel-polyfill', './client/index.js'],
+  entry: ['./client/index.js'],
   output: {
+    publicPath: '/',
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
   },
@@ -15,7 +18,16 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
+            presets: [
+              '@babel/preset-env',
+              '@babel/preset-react',
+              {
+                plugins: [
+                  '@babel/plugin-proposal-class-properties',
+                  '@babel/plugin-transform-runtime',
+                ],
+              },
+            ],
           },
         },
       },
@@ -24,21 +36,36 @@ module.exports = {
         use: ['style-loader', 'css-loader'],
       },
       {
+        test: /\.(gif|svg|jpg|png)$/,
+        loader: 'file-loader',
+      },
+      {
         test: /\.js$/,
-        enforce: "pre",
-        use: ["source-map-loader"],
+        enforce: 'pre',
+        use: ['source-map-loader'],
       },
     ],
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['', '.js', '.jsx', '.json', '.jpg', '.jpeg', '.png'],
   },
+  plugins: [
+    new HtmlWepackPlugin({
+      template: './index.html',
+    }),
+    new MiniCssExtractPlugin(),
+  ],
   devServer: {
-    publicPath: '/build/',
+    publicPath: '/',
+    port: 8080,
     proxy: {
-      '/api': 'http://localhost:3000',
+      '/': {
+        target: 'http://localhost:3000/',
+      },
     },
     hot: true,
+    inline: true,
+    open: true,
     historyApiFallback: true,
   },
 };
