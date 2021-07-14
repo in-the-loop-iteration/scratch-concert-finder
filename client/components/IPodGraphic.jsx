@@ -37,7 +37,7 @@ const IPodGraphic = ({ play, setPlay, playlistIdx, setPlaylistIdx, playlist, sea
             <div className="playlist-item">
               <iframe 
                 width="250" 
-                height="190" 
+                height="190"
                 src={ play ?
                   `https://www.youtube.com/embed/${playlist[playlistIdx].videoId}?controls=0&autoplay=1`
                   : `https://www.youtube.com/embed/${playlist[playlistIdx].videoId}?controls=0`} 

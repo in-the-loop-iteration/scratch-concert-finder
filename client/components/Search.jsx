@@ -13,9 +13,9 @@ import IPodGraphic from './IPodGraphic';
 import FetchMapSearchResults from '../api/FetchMapSearchResults';
 import FetchPlaylist from '../api/FetchPlaylist';
 import Profile from '/client/components/Profile.jsx';
-import FetchSpotifyAccessToken from '../api/FetchSpotifyAccessToken';
-import extractQueryParams from '../utils/extractQueryParams.js';
-import Player from './Player';
+// import FetchSpotifyAccessToken from '../api/FetchSpotifyAccessToken';
+// import extractQueryParams from '../utils/extractQueryParams.js';
+// import Player from './Player';
 import SearchResults from './SearchResults';
 import '../css/search.css';
 
@@ -31,6 +31,15 @@ const Search = () => {
   //state that controls the iPod
   const [play, setPlay] = useState(false);
   const [playlistIdx, setPlaylistIdx] = useState(0);
+
+  //state for logged in or not
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  //state for user info
+	const [userInfo, setUserInfo] = useState({
+		email: '',
+		name: '',
+	});
 
 	// const [spotifyToken, setSpotifyToken] = useState('');
 	// const [loading, setLoading] = useState(true);
@@ -55,7 +64,6 @@ const Search = () => {
         filteredResults.push(results[i])
       }
     }
-    // console.log(filteredResults);
 		setSearchResults(filteredResults);
 	};
 
@@ -101,7 +109,11 @@ const Search = () => {
           <DrawerContent>
             <DrawerHeader borderBottomWidth='1px'>Your Profile</DrawerHeader>
             <DrawerBody>
-              <Profile />
+              <Profile
+                isLoggedIn={isLoggedIn} 
+                setIsLoggedIn={setIsLoggedIn} 
+                userInfo={userInfo}
+                setUserInfo={setUserInfo} />
             </DrawerBody>
           </DrawerContent>
         </Drawer>
