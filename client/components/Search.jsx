@@ -27,6 +27,7 @@ const Search = () => {
 	const [search, setSearch] = useState('');
 	const [searchResults, setSearchResults] = useState([]);
 	const [playlist, setPlaylist] = useState(undefined);
+	const [searchAgain, setSearchAgain] = useState(false);
 
   //state that controls the iPod
   const [play, setPlay] = useState(false);
@@ -116,19 +117,29 @@ const Search = () => {
           <Input
             className='input'
             placeholder='Enter your zip code to hear artists playing near you!'
-            onChange={(e) => {setSearch(e.target.value)}}
+            onChange={(e) => {
+							setSearch(e.target.value);
+						}}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
+								if (playlist !== undefined) {
+									setSearchResults([]);
+									setSearchAgain(true);
+								}	
                 handleSearchForLocation();
               }
             }}
           />
         </div>
         <div className='searchResults'>
-          {searchResults.length > 0 && (! playlist || playlist.length === 0) && (
+          {searchResults.length > 0 && (! playlist || playlist.length === 0 || searchAgain) && (
             <SearchResults
               searchResults={searchResults}
               handlePlaylist={handlePlaylist}
+							setPlaylist={setPlaylist}
+              setPlay={setPlay}
+							setPlaylistIdx={setPlaylistIdx}
+							setSearchAgain={setSearchAgain}
               className='place-item'
             />
           )}
