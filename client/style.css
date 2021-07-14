@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap');
 
 *,
 *::before,
@@ -10,7 +10,7 @@
 }
 
 :root {
-	--ff-header: 'Great Vibes', serif;
+	--ff-header: 'Caveat Brush', cursive;
 	--ff-body: 'Roboto Condensed', sans-serif;
 
 	--clr-primary: #e63946;

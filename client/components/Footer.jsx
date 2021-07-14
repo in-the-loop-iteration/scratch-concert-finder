@@ -4,7 +4,7 @@ import '../css/footer.css';
 // create our copyright
 const Footer = () => {
 	return (
-<footer className='footer'>Copyright 2021 Tassled Wobbegong + Jellies</footer>
+<footer>Copyright 2021 Tassled Wobbegong + Jellies | iPod by <a href="https://codepen.io/freepen">@freepen</a></footer>
 	)
 }
 	
