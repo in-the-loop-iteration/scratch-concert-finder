@@ -34,3 +34,11 @@
 .searchimg {
   height: 75%;
 }
+
+#now-playing {
+  font-family: 'Caveat Brush', cursive;
+  font-size: 30px;
+  height: 55px;
+  position: absolute;
+  top: 120px; 
+}
