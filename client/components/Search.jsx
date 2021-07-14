@@ -20,23 +20,31 @@ import SearchResults from './SearchResults';
 import '../css/search.css';
 
 const Search = () => {
+  //state for drawer controls
 	const { isOpen, onOpen, onClose } = useDisclosure();
+
+  //state for search results and playlist retrieval
 	const [search, setSearch] = useState('');
 	const [searchResults, setSearchResults] = useState([]);
 	const [playlist, setPlaylist] = useState(undefined);
-	const [spotifyToken, setSpotifyToken] = useState('');
-	const [loading, setLoading] = useState(true);
 
-	useEffect(() => {
-		handleFetchSpotifyAccessToken();
-	}, []);
+  //state that controls the iPod
+  const [play, setPlay] = useState(false);
+  const [playlistIdx, setPlaylistIdx] = useState(0);
 
-	const handleFetchSpotifyAccessToken = async () => {
-		const code = extractQueryParams('code');
-		const token = await FetchSpotifyAccessToken(code);
-		setSpotifyToken(token);
-		setLoading(false);
-	};
+	// const [spotifyToken, setSpotifyToken] = useState('');
+	// const [loading, setLoading] = useState(true);
+
+	// useEffect(() => {
+	// 	handleFetchSpotifyAccessToken();
+	// }, []);
+
+	// const handleFetchSpotifyAccessToken = async () => {
+	// 	const code = extractQueryParams('code');
+	// 	const token = await FetchSpotifyAccessToken(code);
+	// 	setSpotifyToken(token);
+	// 	setLoading(false);
+	// };
 
 	const handleSearchForLocation = async () => {
 		const results = await FetchMapSearchResults({ searchQuery: search });
@@ -56,7 +64,7 @@ const Search = () => {
 		setPlaylist(playlistData);
 	};
 
-	if (loading) return <p>Loading</p>;
+	// if (loading) return <p>Loading</p>;
 
 	return (
 		<div className='search'>
@@ -69,13 +77,26 @@ const Search = () => {
           cursor='pointer'
           tabIndex={0} />
       </div>
+      { playlist !== undefined && (
+        <div id="now-playing"> 
+          Now Playing: {playlist[playlistIdx].title} at {playlist[playlistIdx].venue}
+        </div>
+      )} 
       <IPodGraphic 
+        play={play}
+        setPlay={setPlay}
+        playlistIdx={playlistIdx}
+        setPlaylistIdx={setPlaylistIdx}
         playlist={playlist}
         searchResults={searchResults}
         key={Date.now().toString}
         />
       <div className='sidepanel'>
-        <Drawer placement='right' onClose={onClose} isOpen={isOpen} w={'25%'}>
+        <Drawer 
+          placement='right' 
+          onClose={onClose} 
+          isOpen={isOpen} 
+          w={'25%'}>
           <DrawerOverlay />
           <DrawerContent>
             <DrawerHeader borderBottomWidth='1px'>Your Profile</DrawerHeader>
@@ -89,7 +110,7 @@ const Search = () => {
         <div className='searchbar'>
           <Input
             className='input'
-            placeholder='Enter your Zip Code to hear artists playing near you'
+            placeholder='Enter your zip code to hear artists playing near you!'
             onChange={(e) => {setSearch(e.target.value)}}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {

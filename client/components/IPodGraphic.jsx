@@ -3,9 +3,7 @@ import '../css/IPodGraphic.css';
 
 // HTMl/CSS iPod courtesy of https://codepen.io/freepen
 
-const IPodGraphic = ({ playlist, searchResults }) => {
-  const [playlistIdx, setPlaylistIdx] = useState(0);
-  const [play, setPlay] = useState(false);
+const IPodGraphic = ({ play, setPlay, playlistIdx, setPlaylistIdx, playlist, searchResults }) => {
 
   const handleTickets = () => {
     open(playlist[playlistIdx].ticketsLink);
@@ -37,12 +35,9 @@ const IPodGraphic = ({ playlist, searchResults }) => {
         <div className="screen">
           { playlist !== undefined && playlist.length > 0 ? (
             <div className="playlist-item">
-              <div id="playlist-title">
-              {playlist[playlistIdx].title} at {playlist[playlistIdx].venue}
-              </div>
               <iframe 
-                width="240" 
-                height="150" 
+                width="250" 
+                height="190" 
                 src={ play ?
                   `https://www.youtube.com/embed/${playlist[playlistIdx].videoId}?controls=0&autoplay=1`
                   : `https://www.youtube.com/embed/${playlist[playlistIdx].videoId}?controls=0`} 
