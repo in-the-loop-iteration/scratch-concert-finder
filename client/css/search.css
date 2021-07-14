@@ -33,7 +33,10 @@
   height: 75%;
 }
 
-.screen {
-  color: var(--clr-secondary);
-  text-align: center;
+.now-playing {
+  font-family: 'Caveat Brush', cursive;
+  font-size: 30px;
+  height: 55px;
+  position: absolute;
+  top: 150px; 
 }

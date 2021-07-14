@@ -7,10 +7,12 @@ const SearchResults = ({ searchResults, handlePlaylist }) => {
     {searchResults.map((result, i) => (
         <div
           onClick={() => handlePlaylist(result)}
+          onKeyPress={(e) => e.key === 'Enter' || ' ' ? handlePlaylist(result) : e}
           key={i}
           id={result.place_id}
           // style={{ marginTop: '2em' }}
           className="place-item"
+          tabIndex={0}
         >
           {result.description}
         </div>
