@@ -88,6 +88,66 @@ userController.logIn = async (req, res) => {
 	}
 };
 
+userController.favorite = async (req, res) => {
+	try {
+		// id is user id
+		const { id } = req.params;
+		//fav is object, contains concert info or artist info
+		const fav = req.body;
+
+		// * locate the user by id
+		const user = await User.findById(id);
+		user.favorites.push(fav);
+		//update user db with new favorites
+		await User.findByIdAndUpdate(id, {
+			favorites: user.favorites,
+		});
+		//console.log('user.favorites is: ', user.favorites);
+
+		// const testUser = await User.findById(id);
+		// console.log('testUser after adding fav is: ', testUser);
+		res.status(200).json({
+			id: user._id,
+			name: user.name,
+			favorites: user.favorites,
+			log: 'saved into fav',
+		});
+	} catch (error) {
+		console.log('error in favorite: ', error);
+		res.status(500).json({ message: error });
+	}
+};
+
+userController.unfavorite = async (req, res) => {
+	try {
+		// id is user id
+		const { id } = req.params;
+		//favId is the position of fav item in fav array
+		const favId = req.body.favId;
+		const user = await User.findById(id);
+		// todo: check if favId is outside the bound of fav length
+		if (favId >= user.favorites.length)
+			return res.status(500).json('favId is out of bound');
+		// splice position takes index position
+		const deleted = user.favorites.splice(favId, 1);
+		// console.log('deleted is: ', deleted);
+		// console.log('user.fav after splice is: ', user.favorites);
+
+		//update db with new fav array
+		await User.findByIdAndUpdate(id, { favorites: user.favorites });
+		res.status(200).json({
+			id: user._id,
+			name: user.name,
+			favorite: user.favorites,
+			deleted: deleted,
+			log: 'deleted it from fav',
+		});
+	} catch (error) {
+		console.log('error in unfavorite: ', error);
+		res.status(500).json({ message: error });
+	}
+};
+
 /* const createUser = async (req, res, next) => {
 	const { name, email, password } = req.query;
 	try {
