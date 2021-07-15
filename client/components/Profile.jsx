@@ -10,13 +10,14 @@ import {
 	InputRightElement,
 } from '@chakra-ui/react';
 
-const Profile = () => {
+const Profile = ({ isLoggedIn, setIsLoggedIn, userInfo, setUserInfo }) => {
 	//state that decides which view the user sees in the drawer
 	const [userView, setUserView] = useState({
 		loginView: true,
 		createUserView: false,
-		userAccountView: false,
 	});
+
+  console.log(isLoggedIn);
 
 	//state for showing/hiding password
 	const [show, setShow] = useState(false);
@@ -33,12 +34,6 @@ const Profile = () => {
 	const [login, setLogin] = useState({
 		email: '',
 		password: '',
-	});
-
-	//state for user info
-	const [userInfo, setUserInfo] = useState({
-		email: '',
-		name: '',
 	});
 
 	//controls whether password text is displayed or not
@@ -81,8 +76,8 @@ const Profile = () => {
 					setUserView({
 						loginView: false,
 						createUserView: false,
-						userAccountView: true,
 					});
+          setIsLoggedIn(true);
 				}
 			})
 			.catch((err) => console.log('signup err: ', err));
@@ -109,8 +104,8 @@ const Profile = () => {
 					setUserView({
 						loginView: false,
 						createUserView: false,
-						userAccountView: true,
 					});
+          setIsLoggedIn(true);
 				}
 			})
 			.catch((err) => console.log('login err: ', err));
@@ -121,7 +116,7 @@ const Profile = () => {
 	return (
 		<Flex flexDirection='column' h='100%' w='25%'>
 			<Flex marginTop={10}>
-				{userView.loginView && (
+				{userView.loginView && !isLoggedIn && (
 					<Box ml='3'>
 						<Input
 							mb='2'
@@ -167,7 +162,7 @@ const Profile = () => {
 					</Box>
 				)}
 
-				{userView.createUserView && (
+				{userView.createUserView && !isLoggedIn && (
 					<Box ml='3'>
 						<Input
 							mb='2'
@@ -228,7 +223,7 @@ const Profile = () => {
 					</Box>
 				)}
 
-				{userView.userAccountView && (
+				{ isLoggedIn && (
 					<div>
 						<Box ml='3'>
 							<Text fontWeight='bold'>{userInfo.name}</Text>
