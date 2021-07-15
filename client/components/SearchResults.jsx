@@ -1,13 +1,29 @@
 import React from 'react';
 import '../css/searchResult.css'
 
-const SearchResults = ({ searchResults, handlePlaylist }) => {
+const SearchResults = ({ searchResults, handlePlaylist, setPlaylist, setPlay, setPlaylistIdx, setSearchAgain }) => {
   return (
   <div className="placePanel" style={{ cursor: 'pointer' }}>
     {searchResults.map((result, i) => (
         <div
-          onClick={() => handlePlaylist(result)}
-          onKeyPress={(e) => e.key === 'Enter' || ' ' ? handlePlaylist(result) : e}
+          onClick={() => {
+            setPlaylist(undefined);
+            setPlay(false);
+            setPlaylistIdx(0);
+            handlePlaylist(result);
+            setSearchAgain(false);
+          }}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter' || ' ') {
+              setPlaylist(undefined);
+              setPlay(false);
+              setPlaylistIdx(0);
+              handlePlaylist(result);
+              setSearchAgain(false);
+              } else {
+              return e;
+            }
+          }}
           key={i}
           id={result.place_id}
           // style={{ marginTop: '2em' }}
