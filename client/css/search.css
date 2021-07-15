@@ -38,5 +38,14 @@
   font-size: 30px;
   height: 55px;
   position: absolute;
-  top: 150px; 
+  top: 120px; 
+}
+
+@media screen and (max-width: 200px) {
+  .now-playing {
+    top: 0;
+  }
+  .search {
+    background-color: blue;
+  }
 }

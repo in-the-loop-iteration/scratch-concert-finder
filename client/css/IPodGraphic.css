@@ -14,7 +14,7 @@ body {background-color: #2e2e2e;}
   -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.4);
      -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.4);
           box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.4);
-  margin-top: 140px;
+  margin-top: 80px;
 }
 
 .main {
@@ -225,4 +225,10 @@ img.play-pause:hover {
   -webkit-box-shadow: inset 0px -2px 14px -1px rgba(0,0,0,0.3);
      -moz-box-shadow: inset 0px -2px 14px -1px rgba(0,0,0,0.3);
           box-shadow: inset 0px -2px 14px -1px rgba(0,0,0,0.3);
+}
+
+@media screen and (max-width: 800px) {
+  .back-cover {
+    margin-top: 0;
+  }
 }
