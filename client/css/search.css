@@ -1,12 +1,13 @@
 
 .search {
   width: auto;
-  height: auto;
+  height: 85vh;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: scroll;
 }
 
 .infoIcon {
@@ -35,8 +36,16 @@
 
 .now-playing {
   font-family: 'Caveat Brush', cursive;
-  font-size: 30px;
-  height: 55px;
-  position: absolute;
-  top: 150px; 
+  font-size: 25px;
+  height: auto;
+  position: relative;
+  /* top: 120px;  */
+  margin: 5px;
+  text-align: center;
 }
+
+/* this make the scrollbar from overflow stay hidden */
+.search::-webkit-scrollbar {
+  display: none;
+}
+

@@ -51,7 +51,7 @@ const IPodGraphic = ({ play, setPlay, playlistIdx, setPlaylistIdx, playlist, sea
           ) : playlist }
 
           {searchResults.length > 0 && (Array.isArray(playlist) && playlist.length === 0) && (
-            <div>No concerts found in this area!</div>
+            <div></div>
           )}
         </div>
         <div className="navigator">        
