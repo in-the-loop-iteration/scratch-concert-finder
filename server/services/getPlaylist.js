@@ -5,13 +5,37 @@ const spotifyArtistTopTracks = require('./spotifyArtistTopTracks');
 const googleMapsDistance = require('./googleMapsDistance');
 const googleMapsPlaceLatLong = require('./googleMapsPlaceLatLong');
 const axios = require('axios');
-const { youtubeApiKey } = require('../config');
+const { youtubeApiKey, ticketmasterApiKey } = require('../config');
 
 const getPlaylist = async ({ placeId }) => {
   try {
     const coordinates = await googleMapsPlaceLatLong(placeId);
-    let concerts = (await predictHQConcerts(coordinates));
-    concerts = concerts.slice(0,2);
+    console.log(coordinates);
+    // { lat: 40.7595044, lng: -73.9271644 }
+    const config1 = {
+      method: 'get',
+      url: `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${ticketmasterApiKey}&latlong=${coordinates.lat},${-coordinates.lng}&radius=50&unit=miles&classificationId=KZFzniwnSyZfZ7v7nJ`,
+    };
+    const ticketMasterSearchResults = await axios(config1).then((response) => {
+      console.log(response.data);
+      return response.data;
+    });
+    console.log(JSON.stringify(ticketMasterSearchResults, null, 2));
+    console.log(ticketMasterSearchResults._embedded.events.slice(0,2));
+    let concerts = ticketMasterSearchResults._embedded.events.map(concert => {
+      const { name, url, distance, dates} = concert;
+      console.log(dates);
+      return {
+        name: title,
+        url,
+        distance,
+        start: dates.start.localDate
+      }
+    })
+
+
+    // let concerts = (await predictHQConcerts(coordinates));
+    // concerts = concerts.slice(0,2);
     console.log(JSON.stringify(concerts, null, 2));
     // const spotifyToken = await spotifyAccessToken();
     const playlist = await Promise.all(
@@ -29,7 +53,8 @@ const getPlaylist = async ({ placeId }) => {
         /* to work on */
         const config = {
           method: 'get',
-          url: `https://www.googleapis.com/youtube/v3/search?key=${youtubeApiKey}&part=snippet&q="${titleScrubbed}"+concert&order=relevance&type=video&videoDefinition=high&videoEmbeddable=true&topicId=/m/04rlf`,
+          // url: `https://www.googleapis.com/youtube/v3/search?key=${youtubeApiKey}&part=snippet&q="${titleScrubbed}"+concert&order=relevance&type=video&videoDefinition=high&videoEmbeddable=true&topicId=/m/04rlf`,
+          url: '',
         };
         const youtubeSearchResults = await axios(config).then((response) => {
           console.log(response.data);
