@@ -5,7 +5,6 @@ import Search from './Search';
 import Profile from './Profile';
 import Footer from './Footer';
 import Header from './header';
-import Homepage from './Homepage';
 import '../style.css';
 
 const theme = extendTheme({});
