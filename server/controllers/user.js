@@ -138,7 +138,7 @@ userController.unfavorite = async (req, res) => {
 		res.status(200).json({
 			id: user._id,
 			name: user.name,
-			favorite: user.favorites,
+			favorites: user.favorites,
 			deleted: deleted,
 			log: 'deleted it from fav',
 		});
@@ -148,6 +148,27 @@ userController.unfavorite = async (req, res) => {
 	}
 };
 
+userController.AllFavorites = async (req, res) => {
+	try {
+		// id is user id
+		const { id } = req.params;
+
+		// * locate the user by id
+		const user = await User.findById(id);
+		console.log('user.favorites is: ', user.favorites);
+		//if()
+		//user.favorites
+
+		res.status(200).json({
+			id: user._id,
+			name: user.name,
+			favorites: user.favorites,
+		});
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({ message: error });
+	}
+};
 /* const createUser = async (req, res, next) => {
 	const { name, email, password } = req.query;
 	try {
