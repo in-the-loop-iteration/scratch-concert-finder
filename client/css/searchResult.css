@@ -1,0 +1,14 @@
+.placePanel {
+  border: solid, 5px;
+  color: var(--clr-fifth);
+  background-color: var(--clr-secondary);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  opacity: 0.7;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.place-item {
+  padding: 5px;
+}

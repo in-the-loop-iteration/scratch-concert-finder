@@ -76,7 +76,7 @@ const Search = () => {
 
 	return (
 		<div className='search'>
-      <div className='infoicon'>
+      <div className='infoIcon'>
 				<ChevronLeftIcon 
           w={6}
           h={6}
@@ -85,9 +85,14 @@ const Search = () => {
           cursor='pointer'
           tabIndex={0} />
       </div>
-      { playlist !== undefined && (
-        <div id="now-playing"> 
+      { playlist !== undefined && playlist.length > 0 && (
+        <div className="now-playing"> 
           Now Playing: {playlist[playlistIdx].title} at {playlist[playlistIdx].venue}
+        </div>
+      )} 
+      { playlist !== undefined && playlist.length === 0 && (
+        <div className="now-playing"> 
+          No concerts found in this area.
         </div>
       )} 
       <IPodGraphic 
@@ -118,8 +123,8 @@ const Search = () => {
           </DrawerContent>
         </Drawer>
       </div>
-      <div className='searchbox'>
-        <div className='searchbar'>
+      <div className='searchBox'>
+        <div className='searchBar'>
           <Input
             className='input'
             placeholder='Enter your zip code to hear artists playing near you!'
