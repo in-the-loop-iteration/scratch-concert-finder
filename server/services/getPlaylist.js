@@ -1,8 +1,8 @@
-const predictHQConcerts = require('./predictHQConcerts');
-const spotifyAccessToken = require('./spotifyAccessToken');
-const spotifyArtistSearch = require('./spotifyArtistSearch');
-const spotifyArtistTopTracks = require('./spotifyArtistTopTracks');
-const googleMapsDistance = require('./googleMapsDistance');
+// const predictHQConcerts = require('./predictHQConcerts');
+// const spotifyAccessToken = require('./spotifyAccessToken');
+// const spotifyArtistSearch = require('./spotifyArtistSearch');
+// const spotifyArtistTopTracks = require('./spotifyArtistTopTracks');
+// const googleMapsDistance = require('./googleMapsDistance');
 const googleMapsPlaceLatLong = require('./googleMapsPlaceLatLong');
 const axios = require('axios');
 const { youtubeApiKey, ticketmasterApiKey } = require('../config');
@@ -37,7 +37,7 @@ const getPlaylist = async ({ placeId }) => {
         // if (!entities || entities.length === 0) return;
         // const venue = entities[0];
         const titleScrubbed = title.replace(/[^\w\s]/gi, '').replace(/\s/g, '+');
-        console.log(titleScrubbed);
+        // console.log(titleScrubbed);
         // const distance = await googleMapsDistance({
         //   pointA: placeId,
         //   pointB: venue.formatted_address,
