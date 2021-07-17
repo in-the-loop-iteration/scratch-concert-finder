@@ -60,7 +60,6 @@ const Search = () => {
 		const results = await FetchMapSearchResults({ searchQuery: search });
     let filteredResults = [];
     for (let i = 0; i<results.length; i++){
-      //console.log(results[i].description[0]*1);
       if (Number.isNaN(results[i].description[0]*1)){
         filteredResults.push(results[i])
       }

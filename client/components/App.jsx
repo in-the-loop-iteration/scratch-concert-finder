@@ -5,7 +5,6 @@ import Search from './Search';
 import Profile from './Profile';
 import Footer from './Footer';
 import Header from './header';
-import Homepage from './Homepage';
 import '../style.css';
 
 const theme = extendTheme({});
@@ -19,9 +18,9 @@ const App = () => (
         <Route path="/">
           <Search />
         </Route>
-        <Route path="/callback/">
+        {/* <Route path="/callback/">
           <Search />
-        </Route>
+        </Route> */}
         <Route path="/profile">
           <Profile />
         </Route>

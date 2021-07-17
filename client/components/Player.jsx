@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from '@chakra-ui/react';
-import SpotifyPlayer from 'react-spotify-web-playback';
+// import SpotifyPlayer from 'react-spotify-web-playback';
 
 const Player = ({ spotifyToken, playlist }) => {
   const playerStyle = {
