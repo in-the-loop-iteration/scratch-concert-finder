@@ -26,7 +26,6 @@ const SearchResults = ({ searchResults, handlePlaylist, setPlaylist, setPlay, se
           }}
           key={i}
           id={result.place_id}
-          // style={{ marginTop: '2em' }}
           className="place-item"
           tabIndex={0}
         >

@@ -6,7 +6,6 @@
 *::before,
 *::after {
 	box-sizing: border-box;
-	/* font-family: 'Work Sans', sans-serif; */
 }
 
 :root {
@@ -30,6 +29,20 @@ body {
 	width: 100%;
 	color: var(--clr-fifth);
 }
+
+/* @-webkit-keyframes slide {
+	100% {
+		left: 0;
+	}
+}
+
+@keyframes slide {
+	100% {
+		left: 0;
+	}
+} */
+
+/*react-datepicker css was here*/
 
 /* p:hover{
     border-bottom: 2px solid white;
@@ -61,17 +74,3 @@ body {
 	margin-right: 33%;
 	width: 33%;
 } */
-
-@-webkit-keyframes slide {
-	100% {
-		left: 0;
-	}
-}
-
-@keyframes slide {
-	100% {
-		left: 0;
-	}
-}
-
-/*react-datepicker css was here*/

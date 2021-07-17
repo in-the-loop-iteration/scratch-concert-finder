@@ -18,9 +18,9 @@ const App = () => (
         <Route path="/">
           <Search />
         </Route>
-        <Route path="/callback/">
+        {/* <Route path="/callback/">
           <Search />
-        </Route>
+        </Route> */}
         <Route path="/profile">
           <Profile />
         </Route>
